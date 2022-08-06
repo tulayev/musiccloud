@@ -215,7 +215,7 @@ project.lock.json
 #**/wwwroot/*
 
 # Development settings
-**/appsettings.Development.json
+**/appsettings.json
 
 # SpecFlow specific
 *.feature.cs
