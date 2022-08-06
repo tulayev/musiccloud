@@ -1,20 +1,11 @@
 using API.Extensions;
-using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DataContext>(options => {
-    options.UseSqlite(builder.Configuration.GetConnectionString("Default"));
-});
-builder.Services.AddCors(options => {
-    options.AddPolicy("Cors", policy => {
-        policy.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
-    });
-});
+
+builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = await builder.Build().MigrateDatabaseAsync<DataContext>();
 
