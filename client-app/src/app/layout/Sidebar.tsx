@@ -1,13 +1,15 @@
+import { Link } from 'react-router-dom'
+
 export default function Sidebar() {
     return (
         <aside id="navBarContainer">
             <nav className="navbar">
-                <a href="/" className="logo">
+                <Link to="/" className="logo">
                     <img 
                         src="/assets/images/icons/logo.png" 
                         alt="Logo" 
                     />
-                </a>
+                </Link>
 
                 <div className="group">
                     <div className="nav-item">
