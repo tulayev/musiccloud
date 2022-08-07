@@ -21,7 +21,7 @@ const tempTrackList = [
     }
 ]
 
-const Player = () => {
+export default function Player() {
     const [trackIndex, setTrackIndex] = useState(0)
     const [audio] = useState(new Audio(tempTrackList[trackIndex].path))
     const [playing, setPlaying] = useState(false) 
@@ -154,7 +154,7 @@ const Player = () => {
                                 title="Previous button"
                             >
                                 <img 
-                                    src={ require('../../assets/images/icons/previous.png') } 
+                                    src="/assets/images/icons/previous.png" 
                                     alt="Previous" 
                                 />
                             </button>
@@ -167,7 +167,7 @@ const Player = () => {
                                 title="Play button"
                             >
                                 <img 
-                                    src={ require('../../assets/images/icons/play.png') } 
+                                    src="/assets/images/icons/play.png" 
                                     alt="Play" 
                                 />
                             </button>
@@ -180,7 +180,7 @@ const Player = () => {
                                 title="Pause button" 
                             >
                                 <img 
-                                    src={ require('../../assets/images/icons/pause.png') } 
+                                    src="/assets/images/icons/pause.png" 
                                     alt="Pause" 
                                 />
                             </button>
@@ -192,7 +192,7 @@ const Player = () => {
                                 title="Next button"
                             >
                                 <img 
-                                    src={ require('../../assets/images/icons/next.png') } 
+                                    src="/assets/images/icons/next.png" 
                                     alt="Next" 
                                 />
                             </button>
@@ -229,7 +229,7 @@ const Player = () => {
                             // onClick={() => mute()}
                         >
                             <img 
-                                src={ require('../../assets/images/icons/volume.png') } 
+                                src="/assets/images/icons/volume.png" 
                                 alt="Volume" 
                             />
                         </button>
@@ -252,5 +252,3 @@ const Player = () => {
         </div>
     )
 }
-
-export default Player

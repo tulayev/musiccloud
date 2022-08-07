@@ -1,10 +1,10 @@
-const Sidebar = () => {
+export default function Sidebar() {
     return (
         <aside id="navBarContainer">
             <nav className="navbar">
                 <a href="/" className="logo">
                     <img 
-                        src={ require('../../assets/images/icons/logo.png') } 
+                        src="/assets/images/icons/logo.png" 
                         alt="Logo" 
                     />
                 </a>
@@ -14,7 +14,7 @@ const Sidebar = () => {
                         <a href="#" className="nav-item-link">
                             Поиск
                             <img 
-                                src={ require('../../assets/images/icons/search.png') } 
+                                src="/assets/images/icons/search.png" 
                                 className="icon" 
                                 alt="Search button" 
                             />
@@ -29,13 +29,8 @@ const Sidebar = () => {
                     <div className="nav-item">
                         <a href="/auth" className="nav-item-link">Войти</a>
                     </div>
-                    <div className="nav-item">
-                        <a href="/upload" className="nav-item-link">Загрузить трек</a>
-                    </div>
                 </div>
             </nav>
         </aside>
     )
 }
-
-export default Sidebar
