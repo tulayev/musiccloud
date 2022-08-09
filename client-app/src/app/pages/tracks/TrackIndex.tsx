@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Track from '../../modules/track'
 
 interface Props {
@@ -13,14 +14,14 @@ export default function TrackIndex({tracks}: Props) {
                 {
                     tracks.map(track => (
                         <div className="grid-view-item" key={track.id}>
-                            <a href="#">
+                            <Link to={`tracks/${track.id}`}>
                                 {/* <img src="" alt={track.title} />  */}
                                 <div style={{ width: '100%', height: '200px', backgroundColor: 'white', color: 'black' }}>No image</div>
                                 <div className="grid-view-info">
                                 <h3>{track.title}</h3>
                                     <p>{track.author}</p>
                                 </div>
-                            </a>
+                            </Link>
                         </div>
                     ))
                 }  

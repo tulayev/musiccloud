@@ -29,6 +29,11 @@ export default function Sidebar() {
                         <a href="/your-music" className="nav-item-link">Ваша музыка</a>
                     </div>
                     <div className="nav-item">
+                        <Link to="/upload" className="nav-item-link">
+                            Загрузить трек
+                        </Link>
+                    </div>
+                    <div className="nav-item">
                         <a href="/auth" className="nav-item-link">Войти</a>
                     </div>
                 </div>

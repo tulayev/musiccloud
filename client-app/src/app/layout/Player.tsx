@@ -4,7 +4,7 @@ const tempTrackList = [
     {
       name: "Take What You Want",
       artist: "Post Malone, Ozzy Osbourne & Travi$ Scott",
-      image: "https://hiphopkit.com/uploads/2022/05/Post-Malone-Take-What-You-Want-artwork.jpg",
+      image: "https://i.ytimg.com/vi/d5Sm84rUsL4/maxresdefault.jpg",
       path: "/uploads/post_malone_take_what_you_want.mp3"
     },
     {
