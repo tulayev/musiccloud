@@ -4,11 +4,12 @@ import Track from '../../modules/track'
 
 interface Props {
     track: Track | undefined
+    submitting: boolean
     closeForm: () => void
     createOrEdit: (track: Track) => void
 }
 
-export default function TrackForm({track: selectedTrack, closeForm, createOrEdit}: Props) {
+export default function TrackForm({track: selectedTrack, closeForm, createOrEdit, submitting}: Props) {
     const initialState = selectedTrack ?? {
         id: '',
         title: '',
@@ -33,7 +34,7 @@ export default function TrackForm({track: selectedTrack, closeForm, createOrEdit
                 <Form.Input placeholder="Title" value={track.title} name="title" onChange={handleInputChange} />
                 <Form.Input placeholder="Author" value={track.author} name="author" onChange={handleInputChange} />
                 <Form.Input placeholder="Genre" value={track.genre} name="genre" onChange={handleInputChange} />
-                <Button floated="right" positive type="submit" content="Submit" />
+                <Button loading={submitting} floated="right" positive type="submit" content="Submit" />
                 {selectedTrack &&
                     <Button onClick={() => closeForm()} floated="right" type="button" content="Cancel" />
                 }
