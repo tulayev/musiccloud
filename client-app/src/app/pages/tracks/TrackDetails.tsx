@@ -32,6 +32,10 @@ export default function TrackDetails() {
 		navigate('/')
 	}
 
+    function handleDelete(id: string | undefined) {
+        setTracks(tracks.filter(t => t.id !== id))
+    }
+
     return (
         <>
             <h1 className="page-heading-big">{ track?.title }</h1>
@@ -45,6 +49,7 @@ export default function TrackDetails() {
                 />
                 : null
             }
+            <Button onClick={() => handleDelete(track?.id)} floated="right" content="Delete" color="red" />
         </>
     )
 }

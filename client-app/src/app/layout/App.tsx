@@ -8,6 +8,7 @@ import TrackIndex from '../pages/tracks/TrackIndex'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import TrackDetails from '../pages/tracks/TrackDetails'
 import TrackForm from '../pages/tracks/TrackForm'
+import { v4 as uuidv4 } from 'uuid'
 
 export default function App() {
 	const [tracks, setTracks] = useState<Track[]>([])
@@ -24,7 +25,7 @@ export default function App() {
 	function handleCreateOrEditTrack(track: Track) {
 		track.id 
 		? setTracks([...tracks.filter(t => t.id !== track.id), track]) 
-		: setTracks([...tracks, track])
+		: setTracks([...tracks, {...track, id: uuidv4()}])
 
 		navigate('/')
 	}
