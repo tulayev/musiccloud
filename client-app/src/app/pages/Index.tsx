@@ -1,11 +1,20 @@
+import { observer } from 'mobx-react-lite'
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import Track from '../../modules/track'
+import Spinner from '../layout/Spinner'
+import { useStore } from '../store/store'
 
-interface Props {
-    tracks: Track[]
-}
+const Index = () => {
+    const {trackStore} = useStore()
+    const {tracks} = trackStore
 
-export default function TrackIndex({tracks}: Props) {
+	useEffect(() => {
+		trackStore.loadTracks()
+	}, [trackStore])
+
+	if (trackStore.loadingInitial) 
+		return <Spinner />
+
     return (
         <>
             <h1 className="page-heading-big">Все треки</h1>
@@ -29,3 +38,5 @@ export default function TrackIndex({tracks}: Props) {
         </>
     )
 }
+
+export default observer(Index)
