@@ -1,5 +1,7 @@
-import axios, { AxiosResponse } from 'axios'
+import axios, { AxiosError, AxiosResponse } from 'axios'
+import { toast } from 'react-toastify'
 import Track from '../modules/track'
+import { store } from '../store/store'
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -10,12 +12,40 @@ const sleep = (delay: number) => {
 axios.defaults.baseURL = 'http://localhost:5000/api'
 
 axios.interceptors.response.use(async res => {
-    try {
-        await sleep(1000)
-        return res
-    } catch (err) {
-        console.log(err)
-        return await Promise.reject(err)
+    await sleep(1000)
+    return res
+}, (err: AxiosError) => {
+    const {data: d, status, config} = err.response!
+    const data: any = d!
+    switch (status) {
+        case 400:
+            if (typeof data === 'string') {
+                toast.error(data)
+            }
+            if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
+                // push to 'not-found' route
+            }
+            if (data.errors) {
+                const modalStateErrors = []
+                for (const key in data.errors) {
+                    if (data.errors[key]) {
+                        modalStateErrors.push(data.errors[key])
+                    }
+                }
+                throw modalStateErrors.flat()
+            }
+            break
+        case 401:
+            toast.error('unaithorized')
+            break
+        case 404:
+            toast.error('not found')
+            // push to 'not-found' route
+            break
+        case 500:
+            store.commonStore.setServerError(data)
+            // push to 'server-error' route
+            break
     }
 })
 

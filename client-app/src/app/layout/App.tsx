@@ -7,6 +7,8 @@ import TrackForm from '../pages/tracks/TrackForm'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
 import { ToastContainer } from 'react-toastify'
+import NotFound from '../pages/errors/NotFound'
+import ServerError from '../pages/errors/ServerError'
 
 const App = () => {
 	const location = useLocation()
@@ -24,6 +26,8 @@ const App = () => {
 								<Route path="/tracks/:id" element={<TrackDetails />} />
 								<Route path="/tracks/edit/:id" element={<TrackForm key={location.key} />} />
 								<Route path="/upload" element={<TrackForm key={location.key} />} />
+								<Route path="/not-found" element={<NotFound />} />
+								<Route path="/server-error" element={<ServerError />} />
 							</Routes>
 						</div>
 					</div>
