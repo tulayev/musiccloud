@@ -2,15 +2,23 @@ using API.Extensions;
 using API.Middleware;
 using Application.Tracks;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers().AddFluentValidation(config => {
-    config.RegisterValidatorsFromAssemblyContaining<TrackValidator>();
-});
+builder.Services.AddControllers(options => 
+{
+    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+    options.Filters.Add(new AuthorizeFilter(policy));
+})
+    .AddFluentValidation(config => {
+        config.RegisterValidatorsFromAssemblyContaining<TrackValidator>();
+    });
 
 builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddIdentityServices(builder.Configuration);
 
 var app = await builder.Build().MigrateDatabaseAsync<DataContext>();
 
@@ -25,6 +33,8 @@ if (app.Environment.IsDevelopment())
 // app.UseHttpsRedirection();
 
 app.UseCors("Cors");
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
