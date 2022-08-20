@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx'
 import agent from '../api/agent'
-import Track from '../modules/track'
+import Track from '../models/track'
 
 export default class TrackStore {
     tracks: Track[] = []

@@ -1,6 +1,12 @@
+import { observer } from 'mobx-react-lite'
 import { Link } from 'react-router-dom'
+import LoginForm from '../pages/auth/LoginForm'
+import RegisterForm from '../pages/auth/RegisterForm'
+import { useStore } from '../store/store'
 
-export default function Sidebar() {
+export default observer(function Sidebar() {
+    const {modalStore, userStore} = useStore()
+
     return (
         <aside id="navBarContainer">
             <nav className="navbar">
@@ -34,10 +40,16 @@ export default function Sidebar() {
                         </Link>
                     </div>
                     <div className="nav-item">
-                        <a href="/auth" className="nav-item-link">Войти</a>
+                        {userStore.isLoggedIn 
+                            ? <p>{userStore.user?.displayName}</p>
+                            : <>
+                                <a href="#" onClick={() => modalStore.openModal(<LoginForm />)} style={{marginRight: 10}} className="nav-item-link">Войти</a> 
+                                <a href="#" onClick={() => modalStore.openModal(<RegisterForm />)} className="nav-item-link">Регистрация</a>
+                            </>
+                        }
                     </div>
                 </div>
             </nav>
         </aside>
     )
-}
+})

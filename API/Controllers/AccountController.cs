@@ -50,12 +50,14 @@ namespace API.Controllers
         {
             if (await _userManager.Users.AnyAsync(u => u.Email == registerDto.Email))
             {
-                return BadRequest("Email уже зарегистрирован");
+                ModelState.AddModelError("email", "Email уже зарегистрирован");
+                return ValidationProblem();
             }
 
             if (await _userManager.Users.AnyAsync(u => u.UserName == registerDto.Username))
             {
-                return BadRequest("UserName уже зарегистрирован");
+                ModelState.AddModelError("username", "UserName уже зарегистрирован");
+                return ValidationProblem();
             }
 
             var user = new User

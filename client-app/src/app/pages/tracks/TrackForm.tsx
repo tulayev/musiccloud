@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup' 
 import MyTextInput from '../../common/form/MyTextInput'
-import Track from '../../modules/track'
+import Track from '../../models/track'
 
 const TrackForm = () => {
     const {trackStore} = useStore()
@@ -53,7 +53,7 @@ const TrackForm = () => {
         return <Spinner />
 
     return (
-        <Segment clearing style={{marginTop: '20px', backgroundColor: '#181818'}}>
+        <Segment clearing style={{marginTop: 20, backgroundColor: '#181818'}}>
             <Header content="Трек" sub color="teal" />
             <Formik 
                 validationSchema={validationSchema} 

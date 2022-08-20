@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import { toast } from 'react-toastify'
-import Track from '../modules/track'
+import Track from '../models/track'
+import { User, UserFormValues } from '../models/user'
 import { store } from '../store/store'
 
 const sleep = (delay: number) => {
@@ -10,6 +11,14 @@ const sleep = (delay: number) => {
 }
 
 axios.defaults.baseURL = 'http://localhost:5000/api'
+
+axios.interceptors.request.use(config => {
+    const token = store.commonStore.token
+    if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`
+    }
+    return config
+})
 
 axios.interceptors.response.use(async res => {
     await sleep(1000)
@@ -36,7 +45,7 @@ axios.interceptors.response.use(async res => {
             }
             break
         case 401:
-            toast.error('unaithorized')
+            toast.error('unauthorized')
             break
         case 404:
             toast.error('not found')
@@ -66,8 +75,15 @@ const Tracks = {
     delete: (id: string) => requests.del<void>(`/tracks/${id}`)
 }
 
+const Account = {
+    current: () => requests.get<User>('/account'),
+    login: (user: UserFormValues) => requests.post<User>('/account/login', user),
+    register: (user: UserFormValues) => requests.post<User>('/account/register', user)
+}
+
 const agent = {
-    Tracks
+    Tracks,
+    Account
 }
 
 export default agent
