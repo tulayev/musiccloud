@@ -9,5 +9,7 @@ namespace Domain
         public string Author { get; set; }
 
         public string Genre { get; set; }
+
+        public ICollection<PlayListTrack> PlayLists { get; set; } 
     }
 }

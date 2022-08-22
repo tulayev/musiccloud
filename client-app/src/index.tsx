@@ -3,7 +3,6 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './app/layout/App'
 import { store, StoreContext } from './app/store/store'
 import reportWebVitals from './reportWebVitals'
-import 'react-toastify/dist/ReactToastify.min.css'
 
 const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement

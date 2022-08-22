@@ -372,3 +372,7 @@ body {
     color: #ffffff;
     margin-bottom: 7px;
 }
+
+.Toastify__toast-body div {
+    color: #181818 !important;
+}
