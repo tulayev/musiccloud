@@ -33,7 +33,7 @@ namespace Application.Tracks
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 _ctx.Tracks.Add(request.Track);
-                var result = await _ctx.SaveChangesAsync() > 0;
+                bool result = await _ctx.SaveChangesAsync() > 0;
 
                 if (!result)
                     return Result<Unit>.Failure("Не удалось загрузить трек");

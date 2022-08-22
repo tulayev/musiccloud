@@ -28,7 +28,7 @@ namespace Application.Tracks
                     return null;
 
                 _ctx.Tracks.Remove(track);
-                var result = await _ctx.SaveChangesAsync() > 0;
+                bool result = await _ctx.SaveChangesAsync() > 0;
 
                 if (!result)
                     return Result<Unit>.Failure("Не удалось удалить трек");
