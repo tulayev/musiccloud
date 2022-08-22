@@ -1,7 +1,7 @@
-using Domain;
 using Microsoft.AspNetCore.Identity;
+using Models;
 
-namespace Persistence
+namespace Data
 {
     public class Seed
     {

@@ -1,5 +1,5 @@
 using AutoMapper;
-using Domain;
+using Models;
 
 namespace Application.Core
 {

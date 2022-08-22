@@ -1,7 +1,7 @@
-using Domain;
+using Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Persistence;
+using Models;
 
 namespace API.Extensions
 {

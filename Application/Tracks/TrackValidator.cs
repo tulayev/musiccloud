@@ -1,5 +1,5 @@
-using Domain;
 using FluentValidation;
+using Models;
 
 namespace Application.Tracks
 {
