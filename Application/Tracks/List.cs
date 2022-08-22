@@ -24,6 +24,5 @@ namespace Application.Tracks
                 return Result<List<Track>>.Success(await _ctx.Tracks.ToListAsync());
             }
         }
-
     }
 }

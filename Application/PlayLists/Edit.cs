@@ -5,20 +5,20 @@ using FluentValidation;
 using MediatR;
 using Persistence;
 
-namespace Application.Tracks
+namespace Application.PlayLists
 {
     public class Edit
     {
         public class Command : IRequest<Result<Unit>> 
         {
-            public Track Track { get; set; }
+            public PlayList PlayList { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()
             {
-                RuleFor(c => c.Track).SetValidator(new TrackValidator());
+                RuleFor(c => c.PlayList).SetValidator(new PlayListValidator());
             }
         }
 
@@ -35,16 +35,16 @@ namespace Application.Tracks
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var track = await _ctx.Tracks.FindAsync(request.Track.Id);
+                var playList = await _ctx.PlayLists.FindAsync(request.PlayList.Id);
 
-                if (track == null) 
+                if (playList == null) 
                     return null;
 
-                _mapper.Map(request.Track, track);
+                _mapper.Map(request.PlayList, playList);
                 bool result = await _ctx.SaveChangesAsync() > 0;
 
                 if (!result)
-                    return Result<Unit>.Failure("Не удалось изменить трек");
+                    return Result<Unit>.Failure("Не удалось изменить плейлист");
 
                 return Result<Unit>.Success(Unit.Value);
             }
