@@ -1,7 +1,9 @@
 using Application.Core;
+using Application.Infrastructure;
 using Data;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Models;
 
 namespace Application.PlayLists
@@ -24,14 +26,21 @@ namespace Application.PlayLists
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _ctx;
+            
+            private readonly IUserAccessor _userAccessor;
 
-            public Handler(DataContext ctx)
+            public Handler(DataContext ctx, IUserAccessor userAccessor)
             {
                 _ctx = ctx;
+                _userAccessor = userAccessor;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
+                var user = await _ctx.Users.FirstOrDefaultAsync(u => u.UserName == _userAccessor.GetUsername());
+
+                request.PlayList.User = user;
+
                 _ctx.PlayLists.Add(request.PlayList);
                 bool result = await _ctx.SaveChangesAsync() > 0;
 
