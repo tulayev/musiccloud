@@ -1,8 +1,8 @@
 using Application.Core;
-using Domain;
+using Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Persistence;
+using Models;
 
 namespace Application.Tracks
 {

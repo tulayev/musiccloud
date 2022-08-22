@@ -1,8 +1,8 @@
 using Application.Core;
-using Domain;
+using Data;
 using FluentValidation;
 using MediatR;
-using Persistence;
+using Models;
 
 namespace Application.PlayLists
 {

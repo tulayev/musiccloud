@@ -1,6 +1,6 @@
 using Application.Core;
+using Data;
 using MediatR;
-using Persistence;
 
 namespace Application.PlayLists
 {
@@ -35,5 +35,6 @@ namespace Application.PlayLists
 
                 return Result<Unit>.Success(Unit.Value);
             }
+        }
     }
 }
