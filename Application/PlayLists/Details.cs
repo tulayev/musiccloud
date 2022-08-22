@@ -1,31 +1,38 @@
 using Application.Core;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Data;
 using MediatR;
-using Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.PlayLists
 {
     public class Details
     {
-        public class Query : IRequest<Result<PlayList>> 
+        public class Query : IRequest<Result<PlayListDTO>> 
         {
             public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Result<PlayList>>
+        public class Handler : IRequestHandler<Query, Result<PlayListDTO>>
         {
             private readonly DataContext _ctx;
+            
+            private readonly IMapper _mapper;
 
-            public Handler(DataContext ctx)
+            public Handler(DataContext ctx, IMapper mapper)
             {
                 _ctx = ctx;
+                _mapper = mapper;
             }
 
-            public async Task<Result<PlayList>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<PlayListDTO>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var playList = await _ctx.PlayLists.FindAsync(request.Id);
+                var playList = await _ctx.PlayLists
+                    .ProjectTo<PlayListDTO>(_mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync(x => x.Id == request.Id);
 
-                return Result<PlayList>.Success(playList);
+                return Result<PlayListDTO>.Success(playList);
             }
         }
     }
