@@ -40,7 +40,8 @@ namespace Application.PlayLists
                 if (playList == null) 
                     return null;
 
-                _mapper.Map(request.PlayList, playList);
+                playList.Name = request.PlayList.Name;
+
                 bool result = await _ctx.SaveChangesAsync() > 0;
 
                 if (!result)

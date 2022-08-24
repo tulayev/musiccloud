@@ -23,5 +23,18 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new Create.Command { PlayList = playList }));
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Edit(Guid id, PlayList playList)
+        {
+            playList.Id = id;
+            return HandleResult(await Mediator.Send(new Edit.Command { PlayList = playList }));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
+        }
     }
 }

@@ -7,11 +7,13 @@ namespace Data
     {
         public static async Task SeedData(DataContext ctx, UserManager<User> userManager) 
         {
+            var jon = new User { DisplayName = "Jon", UserName = "jon", Email = "jon@test.com" };
+
             if (!userManager.Users.Any()) 
             {
                 var users = new List<User>
                 {
-                    new User { DisplayName = "Jon", UserName = "jon", Email = "jon@test.com" },
+                    jon,
                     new User { DisplayName = "Tom", UserName = "tom", Email = "tom@test.com" },
                     new User { DisplayName = "Rob", UserName = "rob", Email = "rob@test.com" }
                 };
@@ -31,19 +33,22 @@ namespace Data
                 {
                     Title = "Byte",
                     Author = "Martin Garrix & Brooks",
-                    Genre = "ElectroHouse"
+                    Genre = "ElectroHouse",
+                    User = jon
                 },
                 new Track
                 {
                     Title = "Take What You Want",
                     Author = "Post Malone, Ozzy Osbourne & Travi$ Scott",
-                    Genre = "Hip-Hop"
+                    Genre = "Hip-Hop",
+                    User = jon
                 },
                 new Track
                 {
                     Title = "Marooned",
                     Author = "Pink Floyd",
-                    Genre = "Rock"
+                    Genre = "Rock",
+                    User = jon
                 }
             };
 

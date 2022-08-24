@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import { toast } from 'react-toastify'
+import PlayList from '../models/playlist'
 import Track from '../models/track'
 import { User, UserFormValues } from '../models/user'
 import { store } from '../store/store'
@@ -75,6 +76,14 @@ const Tracks = {
     delete: (id: string) => requests.del<void>(`/tracks/${id}`)
 }
 
+const PlayLists = {
+    list: () => requests.get<PlayList[]>('/playlists'),
+    details: (id: string) => requests.get<PlayList>(`/playlists/${id}`),
+    create: (playList: PlayList) => requests.post<void>('/playlists', playList),
+    update: (playList: PlayList) => requests.put<void>(`/playlists/${playList.id}`, playList),
+    delete: (id: string) => requests.del<void>(`/playlists/${id}`)
+}
+
 const Account = {
     current: () => requests.get<User>('/account'),
     login: (user: UserFormValues) => requests.post<User>('/account/login', user),
@@ -83,6 +92,7 @@ const Account = {
 
 const agent = {
     Tracks,
+    PlayLists,
     Account
 }
 

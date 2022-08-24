@@ -6,8 +6,8 @@ namespace Models
 
         public string Name { get; set; }   
 
-        public User User { get; set; }  
+        public User User { get; set; }
 
-        public ICollection<PlayListTrack> Tracks { get; set; }   
+        public ICollection<PlayListTrack> Tracks { get; set; } = new List<PlayListTrack>();   
     }
 }

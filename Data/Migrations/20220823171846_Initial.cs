@@ -51,20 +51,6 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tracks",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Title = table.Column<string>(type: "TEXT", nullable: true),
-                    Author = table.Column<string>(type: "TEXT", nullable: true),
-                    Genre = table.Column<string>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tracks", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -189,6 +175,26 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Tracks",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Title = table.Column<string>(type: "TEXT", nullable: true),
+                    Author = table.Column<string>(type: "TEXT", nullable: true),
+                    Genre = table.Column<string>(type: "TEXT", nullable: true),
+                    UserId = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tracks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tracks_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PlayListTrack",
                 columns: table => new
                 {
@@ -265,6 +271,11 @@ namespace Data.Migrations
                 name: "IX_PlayListTrack_TrackId",
                 table: "PlayListTrack",
                 column: "TrackId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tracks_UserId",
+                table: "Tracks",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -1,6 +1,8 @@
-namespace Models
+using Application.Profiles;
+
+namespace Application.Tracks
 {
-    public class Track
+    public class TrackDTO
     {
         public Guid Id { get; set; }
 
@@ -10,8 +12,6 @@ namespace Models
 
         public string Genre { get; set; }
 
-        public User User { get; set; }
-
-        public ICollection<PlayListTrack> PlayLists { get; set; } = new List<PlayListTrack>();
+        public Profile Uploader { get; set; }
     }
 }

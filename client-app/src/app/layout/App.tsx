@@ -15,6 +15,7 @@ import { useStore } from '../store/store'
 import { useEffect } from 'react'
 import Spinner from './Spinner'
 import ModalContainer from '../common/modals/ModalContainer'
+import YourMusic from '../pages/YourMusic'
 
 const App = () => {
 	const location = useLocation()
@@ -45,6 +46,7 @@ const App = () => {
 								<Route path="/tracks/:id" element={<TrackDetails />} />
 								<Route path="/tracks/edit/:id" element={<TrackForm key={location.key} />} />
 								<Route path="/upload" element={<TrackForm key={location.key} />} />
+								<Route path="/your-music" element={<YourMusic />} />
 								<Route path="/login" element={<LoginForm />} />
 								<Route path="/not-found" element={<NotFound />} />
 								<Route path="/server-error" element={<ServerError />} />

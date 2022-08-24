@@ -1,8 +1,10 @@
 using Application.Core;
+using Application.Infrastructure;
 using AutoMapper;
 using Data;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Models;
 
 namespace Application.Tracks
@@ -25,7 +27,10 @@ namespace Application.Tracks
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _ctx;
+            
             private readonly IMapper _mapper;
+            
+            private readonly IUserAccessor _userAccessor;
 
             public Handler(DataContext ctx, IMapper mapper)
             {
@@ -40,7 +45,10 @@ namespace Application.Tracks
                 if (track == null) 
                     return null;
 
-                _mapper.Map(request.Track, track);
+                track.Title = request.Track.Title;
+                track.Author = request.Track.Author;
+                track.Genre = request.Track.Genre;
+                
                 bool result = await _ctx.SaveChangesAsync() > 0;
 
                 if (!result)

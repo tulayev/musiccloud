@@ -1,4 +1,5 @@
 using Application.PlayLists;
+using Application.Tracks;
 using AutoMapper;
 using Models;
 
@@ -8,7 +9,8 @@ namespace Application.Core
     {
         public MappingProfiles()
         {
-            CreateMap<Track, Track>();
+            CreateMap<Track, TrackDTO>()
+                .ForMember(d => d.Uploader, o => o.MapFrom(s => s.User));
             CreateMap<PlayList, PlayListDTO>()
                 .ForMember(d => d.Owner, o => o.MapFrom(s => s.User));
             CreateMap<User, Profiles.Profile>()

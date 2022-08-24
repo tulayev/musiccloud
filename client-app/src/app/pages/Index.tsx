@@ -27,7 +27,7 @@ const Index = () => {
                                 {/* <img src="" alt={track.title} />  */}
                                 <div style={{ width: '100%', height: '200px', backgroundColor: 'white', color: 'black' }}>No image</div>
                                 <div className="grid-view-info">
-                                <h3>{track.title}</h3>
+                                    <h3>{track.title}</h3>
                                     <p>{track.author}</p>
                                 </div>
                             </Link>

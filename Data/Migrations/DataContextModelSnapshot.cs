@@ -200,7 +200,12 @@ namespace Data.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tracks");
                 });
@@ -352,6 +357,15 @@ namespace Data.Migrations
                     b.Navigation("PlayList");
 
                     b.Navigation("Track");
+                });
+
+            modelBuilder.Entity("Models.Track", b =>
+                {
+                    b.HasOne("Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Models.PlayList", b =>

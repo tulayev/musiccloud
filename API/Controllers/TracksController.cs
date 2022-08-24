@@ -1,4 +1,5 @@
 using Application.Tracks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 
@@ -6,12 +7,14 @@ namespace API.Controllers
 {
     public class TracksController : BaseApiController
     {
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             return HandleResult(await Mediator.Send(new List.Query()));
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
