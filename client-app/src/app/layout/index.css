@@ -17,7 +17,13 @@ body {
     min-width: 720px; 
 }
 
-#nowPlayingBarContainer {
+img {
+    object-fit: cover;
+    max-width: 100%;
+}
+
+/* Bottom player styles */
+.player_container {
     width: 100%;
     background-color: #282828;
     bottom: 0;
@@ -25,25 +31,25 @@ body {
     min-width: 620px;
 }
 
-#nowPlayingBar {
+.player {
     display: flex;
     height: 90px;
     padding: 16px;
     box-sizing: border-box;
 }
 
-#nowPlayingLeft, 
-#nowPlayingRight {
+.player_left_content, 
+.player_right_content {
     width: 30%;
     min-width: 180px;
 }
 
-#nowPlayingRight {
+.player_right_content {
     position: relative;
     margin-top: 16px;
 }
 
-#nowPlayingCenter {
+.player_center_content {
     width: 40%;
     max-width: 700px;
     display: flex;
@@ -51,7 +57,7 @@ body {
     align-items: center;
 }
 
-#nowPlayingBar .content {
+.player .content {
     width: 100%;
     height: 57px;
 }
@@ -114,7 +120,7 @@ body {
     border-radius: 2px;
 }
 
-#nowPlayingLeft .album-artwork { 
+.player_left_content .album-artwork { 
     width: 60px;
     height: 60px;
     object-fit: cover;
@@ -123,17 +129,17 @@ body {
     background-size: cover;
 }
 
-#nowPlayingLeft .track-info {
+.player_left_content .track-info {
     display: table;
 }
 
-#nowPlayingLeft .track-info .track-name {
+.player_left_content .track-info .track-name {
     margin: 6px 0;
     display: inline-block;
     width: 100%;
 }
 
-#nowPlayingLeft .track-info .artist-name span {
+.player_left_content .track-info .artist-name span {
     font-size: 12px;
     color: #a0a0a0;
 }
@@ -149,12 +155,14 @@ body {
     width: 125px;
 }
 
-#topContainer {
+.top_container {
     min-height: 100%;
     width: 100%;
 }
+/* End of the Bottom player styles */
 
-#navBarContainer {
+/* NavBar styles */
+.sidebar_container {
     background-color: #000000;
     width: 220px;
     height: 100vh;
@@ -210,16 +218,18 @@ body {
     top: 6px;
     width: 25px;
 }
+/* End of NavBar styles */
 
-#mainViewContainer {
+/* Main Page styles */
+.main_wrapper {
     margin-left: 220px;
     padding-bottom: 90px;
     width: calc(100% - 220px);
 
 }
 
-#mainContent {
-    padding: 0 20px;
+.main_content {
+    padding: 20px;
 }
 
 .page-heading-big {
@@ -227,17 +237,15 @@ body {
     text-align: center;
 }
 
-.grid-view-item {
-    display: inline-block;
-    width: 30%;
-    max-width: 300px;
-    min-width: 150px;
-    margin-right: 20px;
-    margin-bottom: 20px;
+.grid-view-container {
+    display: flex;
+    justify-content: start;
 }
 
-.grid-view-item img {
-    width: 100%;
+.grid-view-item {
+    max-width: 300px;
+    min-width: 150px;
+    margin: 0 20px;
 }
 
 .grid-view-item a {
@@ -260,118 +268,18 @@ body {
 .grid-view-info h3 {
     font-size: 24px;
 }
+/* End of the Main Page styles */
 
-/* album.php page style */
-
-.entity-info {
-    padding: 40px 0 10px 0;
-    display: inline-block;
-    width: 100%;
+/* Track Details styles */
+.track_details_container {
+    width: 50%;
+    margin: 0 auto;
 }
 
-.entity-info .left-section {
-    width: 30%;
-    max-width: 440px;
-    float: left;
+.track_details_container div {
+    margin: 10px 0;
 }
-
-.entity-info .left-section img {
-    width: 100%;
-}
-
-.entity-info .right-section {
-    width: 70%;
-    float: left;
-    padding: 5px 10px 5px 40px;
-    box-sizing: border-box;
-}
-
-.entity-info .right-section h2 {
-    margin-top: 0;
-}
-
-.entity-info .right-section p {
-    color: #939393;
-    font-weight: 200;
-}
-
-.tracklist {
-    padding: 0;
-}
-
-.tracklist-row {
-    height: 40px;
-    padding: 15px 10px;
-    list-style: none;
-}
-
-.tracklist-row span {
-    color: #939393;
-    font-weight: 200;
-}
-
-.tracklist-row:hover {
-    background-color: #282828; 
-}
-
-.tracklist-row .track-count {
-    float: left;
-    width: 8%;
-}
-
-.tracklist-row .track-count img {
-    width: 20px;
-    visibility: hidden;
-    position: absolute;
-    cursor: pointer;
-}
-
-.tracklist-row:hover .track-count img {
-    visibility: visible;
-}
-
-.tracklist-row .track-count span {
-    visibility: visible;
-}
-
-.tracklist-row:hover .track-count span {
-    visibility: hidden;
-}
-
-.tracklist-row .track-info {
-    width: 75%;
-    float: left;
-}
-
-.tracklist-row .track-info span {
-    display: block;
-}
-
-.tracklist-row .track-options {
-    width: 5%;
-    float: left;
-    text-align: center;
-}
-
-.tracklist-row .track-options img {
-    width: 15px;
-    visibility: hidden;
-}
-
-.tracklist-row:hover .track-options img {
-    visibility: visible;
-}
-
-.tracklist-row .track-duration {
-    width: 12%;
-    float: left;
-    text-align: right;
-}
-
-.tracklist-row .track-info .trackname {
-    color: #ffffff;
-    margin-bottom: 7px;
-}
+/* End of the Track Details styles */
 
 .Toastify__toast-body div {
     color: #181818 !important;

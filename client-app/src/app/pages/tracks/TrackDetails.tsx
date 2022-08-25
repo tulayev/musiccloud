@@ -8,6 +8,7 @@ import { useStore } from '../../store/store'
 const TrackDetails = () => {
     const {id} = useParams<{id: string}>()
     const {trackStore} = useStore()
+    const {userStore} = useStore()
     const {loadTrackSingle, track, loadingInitial} = trackStore
 
     useEffect(() => {
@@ -20,10 +21,36 @@ const TrackDetails = () => {
         return <Spinner />
 
     return (
-        <>
-            <h2 className="page-heading-big">{ track.title }</h2>
-            <Button as={Link} to={`/tracks/edit/${track.id}`} floated="right" content="Edit" />    
-        </>
+        <div className="track_details_container">
+            <div className="image_cover">
+                <img src="/assets/images/zaglushka.jpg" alt="Zaglushka" />
+            </div>
+            <div>
+                <h2>Название: {track.title}</h2>
+                <p>Автор: {track.author}</p>
+                <p>Жанр: {track.genre}</p>
+            </div>
+            <div>
+                {
+                    userStore.user?.username === track.uploader?.username &&
+                    <>
+                        <Button 
+                            as={Link} 
+                            to={`/tracks/edit/${track.id}`} 
+                            color="green"
+                        >
+                            Изменить
+                        </Button>  
+                        <Button 
+                            onClick={() => console.log('delete')}
+                            color="red"
+                        >
+                            Удалить
+                        </Button>  
+                    </>
+                }
+            </div>  
+        </div>
     )
 }
 

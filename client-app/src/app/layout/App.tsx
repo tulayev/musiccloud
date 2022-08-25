@@ -36,11 +36,11 @@ const App = () => {
 		<>
 			<ToastContainer position="bottom-right" />
 			<ModalContainer />
-			<div id="mainContainer">
-				<div id="topContainer">
+			<div className="main_container">
+				<div className="top_container">
 					<Sidebar />
-					<div id="mainViewContainer">
-						<div id="mainContent">
+					<div className="main_wrapper">
+						<div className="main_content">
 							<Routes>
 								<Route path="/" element={<Index />} />
 								<Route path="/tracks/:id" element={<TrackDetails />} />

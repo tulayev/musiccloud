@@ -9,8 +9,9 @@ export default function YourMusic() {
     return (
         <>
             <Button 
-                floated="left" 
-                content="Create PlayList"
+                floated="left"
+                color="blue" 
+                content="Создать плейлист"
                 onClick={() => modalStore.openModal(<PlayListForm />)} 
             />
 

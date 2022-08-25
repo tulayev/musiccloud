@@ -1,7 +1,6 @@
 import { Formik } from 'formik'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup' 
 import { v4 as uuidv4 } from 'uuid'
 import Spinner from '../../layout/Spinner'
@@ -17,7 +16,6 @@ interface Props {
 const PlayListForm = ({id}: Props) => {
     const {playListStore} = useStore()
     const {modalStore} = useStore()
-    const navigate = useNavigate()
     const {createPlayList, loadPlayListSingle, updatePlayList, loadingInitial, loading} = playListStore
     const [playList, setPlayList] = useState({
         id: '',

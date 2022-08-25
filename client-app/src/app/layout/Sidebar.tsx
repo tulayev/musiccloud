@@ -8,7 +8,7 @@ export default observer(function Sidebar() {
     const {modalStore, userStore} = useStore()
 
     return (
-        <aside id="navBarContainer">
+        <aside className="sidebar_container">
             <nav className="navbar">
                 <Link to="/" className="logo">
                     <img 
@@ -31,23 +31,50 @@ export default observer(function Sidebar() {
                 </div>
 
                 <div className="group">
-                    <div className="nav-item">
-                        <a href="/your-music" className="nav-item-link">Ваша музыка</a>
-                    </div>
-                    <div className="nav-item">
-                        <Link to="/upload" className="nav-item-link">
-                            Загрузить трек
-                        </Link>
-                    </div>
-                    <div className="nav-item">
-                        {userStore.isLoggedIn 
-                            ? <p>{userStore.user?.displayName}</p>
-                            : <>
-                                <a href="#" onClick={() => modalStore.openModal(<LoginForm />)} style={{marginRight: 10}} className="nav-item-link">Войти</a> 
-                                <a href="#" onClick={() => modalStore.openModal(<RegisterForm />)} className="nav-item-link">Регистрация</a>
-                            </>
-                        }
-                    </div>
+                    {userStore.isLoggedIn ?
+                        <>
+                            <div className="nav-item">
+                                <Link to="/your-music" className="nav-item-link">
+                                    Ваша музыка
+                                </Link>
+                            </div>
+                            <div className="nav-item">
+                                <Link to="/upload" className="nav-item-link">
+                                    Загрузить трек
+                                </Link>
+                            </div>
+                            <div className="nav-item">
+                                <p>Привет, {userStore.user?.displayName}!</p>
+                            </div>
+                            <div className="nav-item">
+                                <a
+                                    href="#" 
+                                    onClick={() => userStore.logout()} 
+                                    className="nav-item-link"
+                                >
+                                        Выйти
+                                </a> 
+                            </div>
+                        </> :
+                        <>
+                            <div className="nav-item">
+                                <a
+                                    href="#" 
+                                    onClick={() => modalStore.openModal(<LoginForm />)} 
+                                    style={{marginRight: 10}} 
+                                    className="nav-item-link">
+                                        Войти
+                                </a> 
+                                <a
+                                    href="#" 
+                                    onClick={() => modalStore.openModal(<RegisterForm />)} 
+                                    className="nav-item-link"
+                                >
+                                    Регистрация
+                                </a>
+                            </div>
+                        </>
+                    }
                 </div>
             </nav>
         </aside>

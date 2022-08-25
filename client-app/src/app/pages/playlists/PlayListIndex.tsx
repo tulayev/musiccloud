@@ -7,11 +7,11 @@ import PlayListForm from './PlayListForm'
 const PlayListIndex = () => {
     const {playListStore} = useStore()
     const {modalStore} = useStore()
-    const {playLists} = playListStore
+    const {playLists, loadPlayLists} = playListStore
 
     useEffect(() => {
-        playListStore.loadPlayLists()
-    }, [playListStore])
+        loadPlayLists()
+    }, [loadPlayLists])
 
     return (
         <>
@@ -21,12 +21,22 @@ const PlayListIndex = () => {
                 {
                     playLists.map(playList => (
                         <div className="grid-view-item" key={playList.id}>
+                            <div className="image_cover">
+                                <img src="/assets/images/playlist.jpg" alt="PlayList_cover" /> 
+                            </div>
                             <div className="grid-view-info">
-                                <p>{playList.name}</p>
+                                <h3>{playList.name}</h3>
                                 <Button
+                                    color="green"
                                     onClick={() => modalStore.openModal(<PlayListForm id={playList.id} />)} 
                                 >
-                                    Edit
+                                    Изменить
+                                </Button>
+                                <Button
+                                    color="red"
+                                    onClick={() => console.log('delete') } 
+                                >
+                                    Удалить
                                 </Button>
                             </div>
                         </div>

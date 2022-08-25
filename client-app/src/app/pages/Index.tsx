@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { Button } from 'semantic-ui-react'
 import Spinner from '../layout/Spinner'
 import { useStore } from '../store/store'
 
@@ -10,6 +11,7 @@ const Index = () => {
 
 	useEffect(() => {
 		trackStore.loadTracks()
+        
 	}, [trackStore])
 
 	if (trackStore.loadingInitial) 
@@ -24,11 +26,17 @@ const Index = () => {
                     tracks.map(track => (
                         <div className="grid-view-item" key={track.id}>
                             <Link to={`tracks/${track.id}`}>
-                                {/* <img src="" alt={track.title} />  */}
-                                <div style={{ width: '100%', height: '200px', backgroundColor: 'white', color: 'black' }}>No image</div>
+                                <div className="image_cover">
+                                    <img src="/assets/images/zaglushka.jpg" alt={track.title} /> 
+                                </div>
                                 <div className="grid-view-info">
                                     <h3>{track.title}</h3>
                                     <p>{track.author}</p>
+                                    <Button
+                                        color="blue"
+                                    >
+                                        Добавить в плейлист
+                                    </Button>
                                 </div>
                             </Link>
                         </div>

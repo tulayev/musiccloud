@@ -120,9 +120,9 @@ export default function Player() {
     }, [trackIndex])
 
     return (
-        <div id="nowPlayingBarContainer">
-            <div id="nowPlayingBar">
-                <div id="nowPlayingLeft">
+        <div className="player_container">
+            <div className="player">
+                <div className="player_left_content">
                     <div className="content">
                         <span className="album-link">
                             <img 
@@ -144,7 +144,7 @@ export default function Player() {
                     </div>
                 </div>
 
-                <div id="nowPlayingCenter">
+                <div className="player_center_content">
                     <div className="content player-controls">
                         <div className="buttons">
                             <button 
@@ -220,7 +220,7 @@ export default function Player() {
                     </div>
                 </div>
 
-                <div id="nowPlayingRight">
+                <div className="player_right_content">
                     <div className="volume-bar">
                         <button 
                             id="muteBtn" 
