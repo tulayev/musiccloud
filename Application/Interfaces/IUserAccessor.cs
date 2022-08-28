@@ -1,4 +1,4 @@
-namespace Application.Infrastructure
+namespace Application.Interfaces
 {
     public interface IUserAccessor
     {

@@ -11,7 +11,6 @@ const Index = () => {
 
 	useEffect(() => {
 		trackStore.loadTracks()
-        
 	}, [trackStore])
 
 	if (trackStore.loadingInitial) 

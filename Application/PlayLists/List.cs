@@ -1,5 +1,5 @@
 using Application.Core;
-using Application.Infrastructure;
+using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Data;

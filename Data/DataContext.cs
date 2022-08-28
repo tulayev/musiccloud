@@ -10,6 +10,8 @@ namespace Data
         {
         }
 
+        public DbSet<AppFile> Files { get; set; }
+
         public DbSet<Track> Tracks { get; set; }
 
         public DbSet<PlayList> PlayLists { get; set; }

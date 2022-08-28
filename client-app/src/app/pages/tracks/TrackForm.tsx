@@ -9,6 +9,7 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup' 
 import MyTextInput from '../../common/form/MyTextInput'
 import Track from '../../models/track'
+import MyCustomInput from '../../common/form/MyCustomInput'
 
 const TrackForm = () => {
     const {trackStore} = useStore()
@@ -66,6 +67,12 @@ const TrackForm = () => {
                         <MyTextInput name="title" placeholder="Title"  />
                         <MyTextInput name="author" placeholder="Author" />
                         <MyTextInput name="genre" placeholder="Genre" />
+                        {track.id.length === 0 &&
+                            <>
+                                <MyCustomInput name="file" type="file" label="Выберите аудиофайл" />
+                                <MyCustomInput name="file" type="file" label="Выберите постер" />
+                            </>
+                        }
                         <Button 
                             disabled={isSubmitting || !dirty || !isValid}
                             loading={loading} 
