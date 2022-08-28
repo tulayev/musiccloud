@@ -15,8 +15,8 @@ namespace Application.Tracks
 
         public Profile Uploader { get; set; }
 
-        // public string Poster { get; set; }
+        public string Poster { get; set; }
 
-        // public string Audio { get; set; }
+        public string Audio { get; set; }
     }
 }

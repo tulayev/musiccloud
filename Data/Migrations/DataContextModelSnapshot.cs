@@ -208,11 +208,17 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("AudioId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Author")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Genre")
                         .HasColumnType("TEXT");
+
+                    b.Property<int?>("PosterId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
@@ -221,6 +227,10 @@ namespace Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AudioId");
+
+                    b.HasIndex("PosterId");
 
                     b.HasIndex("UserId");
 
@@ -383,9 +393,21 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Models.Track", b =>
                 {
+                    b.HasOne("Models.AppFile", "Audio")
+                        .WithMany()
+                        .HasForeignKey("AudioId");
+
+                    b.HasOne("Models.AppFile", "Poster")
+                        .WithMany()
+                        .HasForeignKey("PosterId");
+
                     b.HasOne("Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Audio");
+
+                    b.Navigation("Poster");
 
                     b.Navigation("User");
                 });
