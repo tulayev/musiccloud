@@ -38,8 +38,8 @@ namespace Data
                     Author = "Martin Garrix & Brooks",
                     Genre = "ElectroHouse",
                     User = jon,
-                    //Poster = testFile,
-                    //Audio = testFile
+                    Poster = testFile,
+                    Audio = testFile
                 },
                 new Track
                 {
@@ -47,8 +47,8 @@ namespace Data
                     Author = "Post Malone, Ozzy Osbourne & Travi$ Scott",
                     Genre = "Hip-Hop",
                     User = jon,
-                    //Poster = testFile,
-                    //Audio = testFile
+                    Poster = testFile,
+                    Audio = testFile
                 },
                 new Track
                 {
@@ -56,8 +56,8 @@ namespace Data
                     Author = "Pink Floyd",
                     Genre = "Rock",
                     User = jon,
-                    //Poster = testFile,
-                    //Audio = testFile
+                    Poster = testFile,
+                    Audio = testFile
                 }
             };
 
