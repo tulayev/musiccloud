@@ -1,5 +1,5 @@
 using Application.Core;
-using Application.Infrastructure;
+using Application.Interfaces;
 using AutoMapper;
 using Data;
 using FluentValidation;

@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import { toast } from 'react-toastify'
+import AppFile from '../models/file'
 import PlayList from '../models/playlist'
 import Track from '../models/track'
 import { User, UserFormValues } from '../models/user'
@@ -90,10 +91,21 @@ const Account = {
     register: (user: UserFormValues) => requests.post<User>('/account/register', user)
 }
 
+const Files = {
+    upload: (file: Blob) => {
+        const formData = new FormData()
+        formData.append('file', file);
+        return axios.post<AppFile>('files', formData, {
+            headers: {'Content-type': 'multipart/form-data'}
+        })
+    }
+}
+
 const agent = {
     Tracks,
     PlayLists,
-    Account
+    Account,
+    Files
 }
 
 export default agent
