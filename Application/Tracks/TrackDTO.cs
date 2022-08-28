@@ -1,5 +1,4 @@
-using Application.Profiles;
-using Models;
+using Application.DTOs;
 
 namespace Application.Tracks
 {
@@ -13,7 +12,7 @@ namespace Application.Tracks
 
         public string Genre { get; set; }
 
-        public Profile Uploader { get; set; }
+        public AccountDTO Uploader { get; set; }
 
         public string Poster { get; set; }
 

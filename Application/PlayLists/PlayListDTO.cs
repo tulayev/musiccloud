@@ -1,4 +1,4 @@
-using Application.Profiles;
+using Application.DTOs;
 
 namespace Application.PlayLists
 {
@@ -8,6 +8,6 @@ namespace Application.PlayLists
 
         public string Name { get; set; }
 
-        public Profile Owner { get; set; }
+        public AccountDTO Owner { get; set; }
     }
 }

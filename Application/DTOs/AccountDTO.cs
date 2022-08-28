@@ -1,6 +1,6 @@
-namespace Application.Profiles
+namespace Application.DTOs
 {
-    public class Profile
+    public class AccountDTO
     {
         public string Username { get; set; }        
         
