@@ -1,6 +1,4 @@
-using Application.DTOs;
-
-namespace Application.PlayLists
+namespace Application.DTOs
 {
     public class PlayListDTO
     {

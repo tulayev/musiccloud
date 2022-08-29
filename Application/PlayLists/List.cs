@@ -1,11 +1,11 @@
 using Application.Core;
+using Application.DTOs;
 using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Models;
 
 namespace Application.PlayLists
 {

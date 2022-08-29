@@ -1,6 +1,4 @@
-using Application.DTOs;
-
-namespace Application.Tracks
+namespace Application.DTOs
 {
     public class TrackDTO
     {
