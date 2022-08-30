@@ -10,11 +10,12 @@ import * as Yup from 'yup'
 import MyTextInput from '../../common/form/MyTextInput'
 import Track from '../../models/track'
 import MyCustomInput from '../../common/form/MyCustomInput'
+import { toast } from 'react-toastify'
 
 const TrackForm = () => {
     const {trackStore, fileStore} = useStore()
     const {createTrack, loadTrackSingle, updateTrack, loadingInitial, loading} = trackStore
-    const {file, upload, uploading} = fileStore
+    const {audioFile, imageFile, upload, uploading} = fileStore
     const {id} = useParams<{id: string}>()
     const navigate = useNavigate()
     const [track, setTrack] = useState({
@@ -39,10 +40,15 @@ const TrackForm = () => {
 
     function handleFormSubmit(track: Track) {
         if (track.id.length === 0) {
+            if (!audioFile) {
+                toast.error('Пожалуйста загрузите аудиофайл')
+                return
+            }
             const newTrack = {
                 ...track,
                 id: uuidv4(),
-                poster: file
+                poster: imageFile,
+                audio: audioFile
             }
             createTrack(newTrack)
                 .then(() => navigate(`/tracks/${newTrack.id}`))
@@ -52,7 +58,11 @@ const TrackForm = () => {
         }
     }
 
-    function handleChange (e: any) {
+    function handleAudioUpload (e: any) {
+        upload(e.target.files[0], true)
+    }
+    
+    function handleImageUpload (e: any) {
         upload(e.target.files[0])
     }
 
@@ -75,16 +85,17 @@ const TrackForm = () => {
                         <MyTextInput name="genre" placeholder="Genre" />
                         {track.id.length === 0 &&
                             <>
-                                {/* <MyCustomInput 
+                                <MyCustomInput 
                                     name="file" 
                                     type="file" 
-                                    label="Выберите аудиофайл" 
-                                /> */}
+                                    label={ uploading ? 'Трек загружается, пожалуйста подождите' : 'Выберите аудиофайл' } 
+                                    handleChange={handleAudioUpload}
+                                />
                                 <MyCustomInput 
                                     name="file" 
                                     type="file" 
                                     label={ uploading ? 'Постер загружается, пожалуйста подождите' : 'Выберите постер' } 
-                                    handleChange={handleChange} 
+                                    handleChange={handleImageUpload} 
                                 />
                             </>
                         }

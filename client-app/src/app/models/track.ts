@@ -14,4 +14,5 @@ export default interface Track {
     genre: string
     uploader?: Uploader
     poster?: AppFile
+    audio?: AppFile
 }

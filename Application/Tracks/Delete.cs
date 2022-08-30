@@ -1,4 +1,5 @@
 using Application.Core;
+using Application.Interfaces;
 using Data;
 using MediatR;
 
@@ -14,10 +15,13 @@ namespace Application.Tracks
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _ctx;
+            
+            private readonly IFileAccessor _fileAccessor;
 
-            public Handler(DataContext ctx)
+            public Handler(DataContext ctx, IFileAccessor fileAccessor)
             {
                 _ctx = ctx;
+                _fileAccessor = fileAccessor;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
@@ -26,6 +30,18 @@ namespace Application.Tracks
 
                 if (track == null)
                     return null;
+
+                if (track.Poster != null) 
+                {
+                    await _fileAccessor.DeleteFile(track.Poster.PublicId);
+                    _ctx.Files.Remove(track.Poster);
+                }
+
+                if (track.Audio != null)
+                {
+                    await _fileAccessor.DeleteFile(track.Audio.PublicId);
+                    _ctx.Files.Remove(track.Audio);
+                }
 
                 _ctx.Tracks.Remove(track);
                 bool result = await _ctx.SaveChangesAsync() > 0;

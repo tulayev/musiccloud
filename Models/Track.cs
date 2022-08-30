@@ -16,6 +16,6 @@ namespace Models
 
         public AppFile Audio { get; set; }
 
-        public ICollection<PlayListTrack> PlayLists { get; set; } = new List<PlayListTrack>();
+        public List<PlayListTrack> PlayLists { get; set; }
     }
 }

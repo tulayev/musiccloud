@@ -19,8 +19,6 @@ namespace Application.Tracks
             private readonly DataContext _ctx;
             
             private readonly IMapper _mapper;
-            
-            private readonly IUserAccessor _userAccessor;
 
             public Handler(DataContext ctx, IMapper mapper)
             {
