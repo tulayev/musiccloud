@@ -26,7 +26,10 @@ const Index = () => {
                         <div className="grid-view-item" key={track.id}>
                             <Link to={`tracks/${track.id}`}>
                                 <div className="image_cover">
-                                    <img src="/assets/images/zaglushka.jpg" alt={track.title} /> 
+                                <img 
+                                    src={track.poster ? track.poster.url : '/assets/images/zaglushka.jpg' } 
+                                    alt={track.title} 
+                                /> 
                                 </div>
                                 <div className="grid-view-info">
                                     <h3>{track.title}</h3>

@@ -1,3 +1,5 @@
+import AppFile from './file'
+
 interface Uploader {
     username: string
     displayName: string
@@ -11,4 +13,5 @@ export default interface Track {
     author: string
     genre: string
     uploader?: Uploader
+    poster?: AppFile
 }

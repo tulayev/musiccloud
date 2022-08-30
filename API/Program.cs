@@ -1,8 +1,6 @@
 using API.Extensions;
 using API.Middleware;
-using Application.Tracks;
 using Data;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 
@@ -12,10 +10,7 @@ builder.Services.AddControllers(options =>
 {
     var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
     options.Filters.Add(new AuthorizeFilter(policy));
-})
-    .AddFluentValidation(config => {
-        config.RegisterValidatorsFromAssemblyContaining<TrackValidator>();
-    });
+});
 
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);

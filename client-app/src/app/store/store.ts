@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react'
 import CommonStore from './commonStore'
+import FileStore from './fileStore'
 import ModalStore from './modalStore'
 import PlayListStore from './playListStore'
 import TrackStore from './trackStore'
@@ -11,6 +12,7 @@ interface Store {
     userStore: UserStore
     modalStore: ModalStore
     playListStore: PlayListStore
+    fileStore: FileStore
 }
 
 export const store: Store = {
@@ -18,7 +20,8 @@ export const store: Store = {
     commonStore: new CommonStore(),
     userStore: new UserStore(),
     modalStore: new ModalStore(),
-    playListStore: new PlayListStore()
+    playListStore: new PlayListStore(),
+    fileStore: new FileStore()
 }
 
 export const StoreContext = createContext(store)

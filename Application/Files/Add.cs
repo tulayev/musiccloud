@@ -28,12 +28,12 @@ namespace Application.Files
             
             public async Task<Result<AppFile>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var photoUploadResult = await _fileAccessor.AddFile(request.File);
+                var fileUploadResult = await _fileAccessor.AddFile(request.File);
 
                 var file = new AppFile
                 {
-                    PublicId = photoUploadResult.PublicId,
-                    Url = photoUploadResult.Url
+                    PublicId = fileUploadResult.PublicId,
+                    Url = fileUploadResult.Url
                 };
 
                 _ctx.Files.Add(file);

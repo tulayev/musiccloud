@@ -11,9 +11,7 @@ namespace Application.Core
         public MappingProfiles()
         {
             CreateMap<Track, TrackDTO>()
-                .ForMember(d => d.Uploader, o => o.MapFrom(s => s.User))
-                .ForMember(d => d.Poster, o => o.MapFrom(s => s.Poster.Url))
-                .ForMember(d => d.Audio, o => o.MapFrom(s => s.Audio.Url));
+                .ForMember(d => d.Uploader, o => o.MapFrom(s => s.User));
 
             CreateMap<PlayList, PlayListDTO>()
                 .ForMember(d => d.Owner, o => o.MapFrom(s => s.User));

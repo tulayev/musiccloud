@@ -1,3 +1,5 @@
+using Models;
+
 namespace Application.DTOs
 {
     public class TrackDTO
@@ -12,8 +14,8 @@ namespace Application.DTOs
 
         public AccountDTO Uploader { get; set; }
 
-        public string Poster { get; set; }
+        public AppFile Poster { get; set; }
 
-        public string Audio { get; set; }
+        public AppFile Audio { get; set; }
     }
 }

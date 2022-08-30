@@ -239,7 +239,7 @@ img {
 
 .grid-view-container {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
 }
 
 .grid-view-item {

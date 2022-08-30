@@ -12,8 +12,9 @@ import Track from '../../models/track'
 import MyCustomInput from '../../common/form/MyCustomInput'
 
 const TrackForm = () => {
-    const {trackStore} = useStore()
+    const {trackStore, fileStore} = useStore()
     const {createTrack, loadTrackSingle, updateTrack, loadingInitial, loading} = trackStore
+    const {file, upload, uploading} = fileStore
     const {id} = useParams<{id: string}>()
     const navigate = useNavigate()
     const [track, setTrack] = useState({
@@ -40,7 +41,8 @@ const TrackForm = () => {
         if (track.id.length === 0) {
             const newTrack = {
                 ...track,
-                id: uuidv4()
+                id: uuidv4(),
+                poster: file
             }
             createTrack(newTrack)
                 .then(() => navigate(`/tracks/${newTrack.id}`))
@@ -48,6 +50,10 @@ const TrackForm = () => {
             updateTrack(track)
                 .then(() => navigate(`/tracks/${track.id}`))
         }
+    }
+
+    function handleChange (e: any) {
+        upload(e.target.files[0])
     }
 
     if (loadingInitial)
@@ -69,12 +75,21 @@ const TrackForm = () => {
                         <MyTextInput name="genre" placeholder="Genre" />
                         {track.id.length === 0 &&
                             <>
-                                <MyCustomInput name="file" type="file" label="Выберите аудиофайл" />
-                                <MyCustomInput name="file" type="file" label="Выберите постер" />
+                                {/* <MyCustomInput 
+                                    name="file" 
+                                    type="file" 
+                                    label="Выберите аудиофайл" 
+                                /> */}
+                                <MyCustomInput 
+                                    name="file" 
+                                    type="file" 
+                                    label={ uploading ? 'Постер загружается, пожалуйста подождите' : 'Выберите постер' } 
+                                    handleChange={handleChange} 
+                                />
                             </>
                         }
                         <Button 
-                            disabled={isSubmitting || !dirty || !isValid}
+                            disabled={isSubmitting || uploading}
                             loading={loading} 
                             floated="right" 
                             positive 

@@ -23,7 +23,10 @@ const TrackDetails = () => {
     return (
         <div className="track_details_container">
             <div className="image_cover">
-                <img src="/assets/images/zaglushka.jpg" alt="Zaglushka" />
+                <img 
+                    src={track.poster ? track.poster.url : '/assets/images/zaglushka.jpg' } 
+                    alt={track.title} 
+                />
             </div>
             <div>
                 <h2>Название: {track.title}</h2>

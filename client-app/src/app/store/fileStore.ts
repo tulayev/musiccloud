@@ -3,7 +3,7 @@ import agent from '../api/agent'
 import AppFile from '../models/file'
 
 export default class FileStore {
-    file: AppFile | null = null
+    file: AppFile | undefined = undefined
     uploading: boolean = false
 
     constructor() {

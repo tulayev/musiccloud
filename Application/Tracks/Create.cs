@@ -1,7 +1,6 @@
 using Application.Core;
 using Application.Interfaces;
 using Data;
-using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Models;
@@ -13,14 +12,6 @@ namespace Application.Tracks
         public class Command : IRequest<Result<Unit>>
         {
             public Track Track { get; set; }
-        }
-
-        public class CommandValidator : AbstractValidator<Command>
-        {
-            public CommandValidator()
-            {
-                RuleFor(c => c.Track).SetValidator(new TrackValidator());
-            }
         }
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
@@ -38,8 +29,10 @@ namespace Application.Tracks
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var user = await _ctx.Users.FirstOrDefaultAsync(u => u.UserName == _userAccessor.GetUsername());
+                var poster = await _ctx.Files.FirstOrDefaultAsync(f => f.Id == request.Track.Poster.Id);
 
                 request.Track.User = user;
+                request.Track.Poster = poster;
 
                 _ctx.Tracks.Add(request.Track);
                 bool result = await _ctx.SaveChangesAsync() > 0;

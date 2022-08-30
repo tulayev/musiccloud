@@ -1,7 +1,6 @@
 using Application.Core;
 using AutoMapper;
 using Data;
-using FluentValidation;
 using MediatR;
 using Models;
 
@@ -12,14 +11,6 @@ namespace Application.PlayLists
         public class Command : IRequest<Result<Unit>> 
         {
             public PlayList PlayList { get; set; }
-        }
-
-        public class CommandValidator : AbstractValidator<Command>
-        {
-            public CommandValidator()
-            {
-                RuleFor(c => c.PlayList).SetValidator(new PlayListValidator());
-            }
         }
 
         public class Handler : IRequestHandler<Command, Result<Unit>>

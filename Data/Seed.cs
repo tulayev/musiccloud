@@ -27,9 +27,6 @@ namespace Data
             if (ctx.Tracks.Any())
                 return;
 
-            var testFile = new AppFile { PublicId = "test", Url = "test" };
-            ctx.Files.Add(testFile);
-
             var tracks = new List<Track>
             {
                 new Track
@@ -37,27 +34,21 @@ namespace Data
                     Title = "Byte",
                     Author = "Martin Garrix & Brooks",
                     Genre = "ElectroHouse",
-                    User = jon,
-                    Poster = testFile,
-                    Audio = testFile
+                    User = jon
                 },
                 new Track
                 {
                     Title = "Take What You Want",
                     Author = "Post Malone, Ozzy Osbourne & Travi$ Scott",
                     Genre = "Hip-Hop",
-                    User = jon,
-                    Poster = testFile,
-                    Audio = testFile
+                    User = jon
                 },
                 new Track
                 {
                     Title = "Marooned",
                     Author = "Pink Floyd",
                     Genre = "Rock",
-                    User = jon,
-                    Poster = testFile,
-                    Audio = testFile
+                    User = jon
                 }
             };
 
