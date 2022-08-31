@@ -7,9 +7,9 @@ import { useStore } from '../../store/store'
 import { v4 as uuidv4 } from 'uuid'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup' 
-import MyTextInput from '../../common/form/MyTextInput'
+import MyTextInput from '../../components/form/MyTextInput'
 import Track from '../../models/track'
-import MyCustomInput from '../../common/form/MyCustomInput'
+import MyCustomInput from '../../components/form/MyCustomInput'
 import { toast } from 'react-toastify'
 
 const TrackForm = () => {

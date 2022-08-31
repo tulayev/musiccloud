@@ -14,7 +14,7 @@ import LoginForm from '../pages/auth/LoginForm'
 import { useStore } from '../store/store'
 import { useEffect } from 'react'
 import Spinner from './Spinner'
-import ModalContainer from '../common/modals/ModalContainer'
+import ModalContainer from '../components/modals/ModalContainer'
 import YourMusic from '../pages/YourMusic'
 
 const App = () => {

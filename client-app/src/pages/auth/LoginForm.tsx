@@ -1,7 +1,7 @@
 import { ErrorMessage, Form, Formik } from 'formik'
 import { observer } from 'mobx-react-lite'
 import { Button, Header, Label } from 'semantic-ui-react'
-import MyTextInput from '../../common/form/MyTextInput'
+import MyTextInput from '../../components/form/MyTextInput'
 import { useStore } from '../../store/store'
 
 export default observer(function LoginForm() {

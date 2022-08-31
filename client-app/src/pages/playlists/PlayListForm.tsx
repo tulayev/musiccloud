@@ -7,7 +7,7 @@ import Spinner from '../../layout/Spinner'
 import PlayList from '../../models/playlist'
 import { useStore } from '../../store/store'
 import { Button, Form, Header } from 'semantic-ui-react'
-import MyTextInput from '../../common/form/MyTextInput'
+import MyTextInput from '../../components/form/MyTextInput'
 
 interface Props {
     id?: string
