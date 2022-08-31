@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from 'mobx'
-import agent from '../api/agent'
+import api from '../api'
 import AppFile from '../models/file'
 
 export default class FileStore {
@@ -14,7 +14,7 @@ export default class FileStore {
     upload = async (file: Blob, isAudio = false) => {
         runInAction(() => this.uploading = true)
         try {
-            const { data } = await agent.Files.upload(file)
+            const { data } = await api.Files.upload(file)
             runInAction(() => {
                 isAudio ? this.audioFile = data : this.imageFile = data
                 this.uploading = false

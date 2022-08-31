@@ -101,11 +101,11 @@ const Files = {
     }
 }
 
-const agent = {
+const endpoints = {
     Tracks,
     PlayLists,
     Account,
     Files
 }
 
-export default agent
+export default endpoints

@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from 'mobx'
-import agent from '../api/agent'
+import api from '../api'
 import Track from '../models/track'
 
 export default class TrackStore {
@@ -15,7 +15,7 @@ export default class TrackStore {
     loadTracks = async () => {
         this.setLoadingInitial(true)
         try {
-            const tracksFromDb = await agent.Tracks.list()
+            const tracksFromDb = await api.Tracks.list()
             runInAction(() => {
                 this.tracks = tracksFromDb
             })
@@ -29,7 +29,7 @@ export default class TrackStore {
     loadTrackSingle = async (id: string) => {
         this.setLoadingInitial(true)
         try {
-            const trackFromDb = await agent.Tracks.details(id)
+            const trackFromDb = await api.Tracks.details(id)
             runInAction(() => {
                 this.track = trackFromDb
             })
@@ -44,7 +44,7 @@ export default class TrackStore {
     createTrack = async (track: Track) => {
         this.setLoading(true)
         try {
-            await agent.Tracks.create(track)
+            await api.Tracks.create(track)
             this.setLoading(false)
         } catch (err) {
             console.log(err)
@@ -55,7 +55,7 @@ export default class TrackStore {
     updateTrack = async (track: Track) => {
         this.setLoading(true)
         try {
-            await agent.Tracks.update(track)
+            await api.Tracks.update(track)
             this.setLoading(false)
         } catch (err) {
             console.log(err)
@@ -66,7 +66,7 @@ export default class TrackStore {
     deleteTrack = async (id: string) => {
         this.setLoading(true)
         try {
-            await agent.Tracks.delete(id)
+            await api.Tracks.delete(id)
             this.setLoading(false)
         } catch (err) {
             console.log(err)

@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from 'mobx'
-import agent from '../api/agent'
+import api from '../api'
 import PlayList from '../models/playlist'
 
 export default class PlayListStore {
@@ -16,7 +16,7 @@ export default class PlayListStore {
         runInAction(() => this.loadingInitial = true)
         
         try {
-            const playListsFromDb = await agent.PlayLists.list()
+            const playListsFromDb = await api.PlayLists.list()
             runInAction(() => {
                 this.playLists = playListsFromDb
                 this.loadingInitial = false
@@ -31,7 +31,7 @@ export default class PlayListStore {
         runInAction(() => this.loadingInitial = true)
         
         try {
-            const playListFromDb = await agent.PlayLists.details(id)
+            const playListFromDb = await api.PlayLists.details(id)
             runInAction(() => {
                 this.playList = playListFromDb
                 this.loadingInitial = false
@@ -46,7 +46,7 @@ export default class PlayListStore {
     createPlayList = async (playList: PlayList) => {
         runInAction(() => this.loading = true)
         try {
-            await agent.PlayLists.create(playList)
+            await api.PlayLists.create(playList)
             runInAction(() => this.loading = false)
         } catch (err) {
             console.log(err)
@@ -57,7 +57,7 @@ export default class PlayListStore {
     updatePlayList = async (playList: PlayList) => {
         runInAction(() => this.loading = true)
         try {
-            await agent.PlayLists.update(playList)
+            await api.PlayLists.update(playList)
             runInAction(() => this.loading = false)
         } catch (err) {
             console.log(err)
@@ -68,7 +68,7 @@ export default class PlayListStore {
     deletePlayList = async (id: string) => {
         runInAction(() => this.loading = true)
         try {
-            await agent.PlayLists.delete(id)
+            await api.PlayLists.delete(id)
             runInAction(() => this.loading = false)
         } catch (err) {
             console.log(err)
