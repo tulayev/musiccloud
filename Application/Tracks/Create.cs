@@ -30,9 +30,11 @@ namespace Application.Tracks
             {
                 var user = await _ctx.Users.FirstOrDefaultAsync(u => u.UserName == _userAccessor.GetUsername());
                 var poster = await _ctx.Files.FirstOrDefaultAsync(f => f.Id == request.Track.Poster.Id);
+                var audio = await _ctx.Files.FirstOrDefaultAsync(f => f.Id == request.Track.Audio.Id);
 
                 request.Track.User = user;
                 request.Track.Poster = poster;
+                request.Track.Audio = audio;
 
                 _ctx.Tracks.Add(request.Track);
                 bool result = await _ctx.SaveChangesAsync() > 0;
