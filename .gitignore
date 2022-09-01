@@ -221,7 +221,9 @@ project.lock.json
 **/Migrations
 
 # SQLite db stuff
-**/musiccloud.*
+**/*.db
+**/*.db-shm
+**/*.db-wal
 
 # SpecFlow specific
 *.feature.cs
