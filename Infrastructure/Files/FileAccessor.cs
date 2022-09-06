@@ -24,49 +24,50 @@ namespace Infrastructure.Files
 
         public async Task<FileUploadResult> AddFile(IFormFile formFile)
         {
-            if (formFile.Length > 0)
+            if (formFile.Length == 0)
+                return null;
+
+            string ext = Path.GetExtension(formFile.FileName).ToLower();
+
+            var uploadResult = ext == ".mp3" 
+                ? await UploadAudio(formFile) 
+                : await UploadImage(formFile);
+
+            if (uploadResult.Error != null)
+                throw new Exception(uploadResult.Error.Message);
+
+            return new FileUploadResult
             {
-                await using var stream = formFile.OpenReadStream();
-
-                string ext = Path.GetExtension(formFile.FileName).ToLower();
-
-                RawUploadResult uploadResult;
-
-                if (ext == ".mp3")
-                {
-                    uploadResult = await _cloudinary.UploadAsync(new VideoUploadParams
-                    {
-                        File = new FileDescription(formFile.FileName, stream)
-                    });
-                }
-                else 
-                {
-                    uploadResult = await _cloudinary.UploadAsync(new ImageUploadParams
-                    {
-                        File = new FileDescription(formFile.FileName, stream),
-                        Transformation = new Transformation().Height(500).Width(500).Crop("fill")
-                    });
-                }
-
-                if (uploadResult.Error != null)
-                {
-                    throw new Exception(uploadResult.Error.Message);
-                }
-
-                return new FileUploadResult
-                {
-                    PublicId = uploadResult.PublicId,
-                    Url = uploadResult.SecureUrl.ToString()
-                };
-            }
-
-            return null;
+                PublicId = uploadResult.PublicId,
+                Url = uploadResult.SecureUrl.ToString()
+            };
         }
 
         public async Task<string> DeleteFile(string publicId)
         {
             var result = await _cloudinary.DestroyAsync(new DeletionParams(publicId));
             return result.Result == "ok" ? result.Result : null;
+        }
+
+        private async Task<RawUploadResult> UploadAudio(IFormFile formFile)
+        {
+            await using var stream = formFile.OpenReadStream();
+
+            return await _cloudinary.UploadAsync(new VideoUploadParams
+            {
+                File = new FileDescription(formFile.FileName, stream)
+            });
+        }
+        
+        private async Task<RawUploadResult> UploadImage(IFormFile formFile)
+        {
+            await using var stream = formFile.OpenReadStream();
+
+            return await _cloudinary.UploadAsync(new ImageUploadParams
+            {
+                File = new FileDescription(formFile.FileName, stream),
+                Transformation = new Transformation().Height(500).Width(500).Crop("fill")
+            });
         }
     }
 }
