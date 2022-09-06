@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
 import Spinner from '../../layout/Spinner'
 import { observer } from 'mobx-react-lite'
@@ -7,9 +7,10 @@ import { useStore } from '../../store/store'
 
 const TrackDetails = () => {
     const {id} = useParams<{id: string}>()
+    const navigate = useNavigate()
     const {trackStore} = useStore()
     const {userStore} = useStore()
-    const {loadTrackSingle, track, loadingInitial} = trackStore
+    const {loadTrackSingle, track, deleteTrack, loadingInitial} = trackStore
 
     useEffect(() => {
         if (id) {
@@ -45,7 +46,10 @@ const TrackDetails = () => {
                             Изменить
                         </Button>  
                         <Button 
-                            onClick={() => console.log('delete')}
+                            onClick={() => {
+                                deleteTrack(track.id)
+                                navigate('/')
+                            }}
                             color="red"
                         >
                             Удалить

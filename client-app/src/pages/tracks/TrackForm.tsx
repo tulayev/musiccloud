@@ -15,7 +15,7 @@ import { toast } from 'react-toastify'
 const TrackForm = () => {
     const {trackStore, fileStore} = useStore()
     const {createTrack, loadTrackSingle, updateTrack, loadingInitial, loading} = trackStore
-    const {audioFile, imageFile, upload, uploading} = fileStore
+    const {audioFile, imageFile, upload, uploadingAudio, uploadingImage} = fileStore
     const {id} = useParams<{id: string}>()
     const navigate = useNavigate()
     const [track, setTrack] = useState({
@@ -88,24 +88,24 @@ const TrackForm = () => {
                                 <MyCustomInput 
                                     name="file" 
                                     type="file" 
-                                    label={ uploading ? 'Трек загружается, пожалуйста подождите' : 'Выберите аудиофайл' } 
+                                    label={ uploadingAudio ? 'Трек загружается, пожалуйста подождите' : 'Выберите аудиофайл' } 
                                     handleChange={handleAudioUpload}
                                 />
                                 <MyCustomInput 
                                     name="file" 
                                     type="file" 
-                                    label={ uploading ? 'Постер загружается, пожалуйста подождите' : 'Выберите постер' } 
+                                    label={ uploadingImage ? 'Постер загружается, пожалуйста подождите' : 'Выберите постер' } 
                                     handleChange={handleImageUpload} 
                                 />
                             </>
                         }
                         <Button 
-                            disabled={isSubmitting || uploading}
+                            disabled={isSubmitting || uploadingAudio || uploadingImage}
                             loading={loading} 
                             floated="right" 
                             positive 
                             type="submit" 
-                            content="Submit" 
+                            content="Отправить" 
                         />
                     </Form>
                 )}

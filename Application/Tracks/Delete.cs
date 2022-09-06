@@ -2,6 +2,7 @@ using Application.Core;
 using Application.Interfaces;
 using Data;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Tracks
 {
@@ -26,7 +27,10 @@ namespace Application.Tracks
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var track = await _ctx.Tracks.FindAsync(request.Id);
+                var track = await _ctx.Tracks
+                    .Include(t => t.Audio)
+                    .Include(t => t.Poster)
+                    .FirstOrDefaultAsync(t => t.Id == request.Id);
 
                 if (track == null)
                     return null;

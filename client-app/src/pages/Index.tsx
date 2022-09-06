@@ -7,13 +7,13 @@ import { useStore } from '../store/store'
 
 const Index = () => {
     const {trackStore} = useStore()
-    const {tracks} = trackStore
+    const {loadTracks, tracks, loadingInitial} = trackStore
 
 	useEffect(() => {
-		trackStore.loadTracks()
-	}, [trackStore])
+        loadTracks()
+	}, [loadTracks])
 
-	if (trackStore.loadingInitial) 
+	if (loadingInitial) 
 		return <Spinner />
 
     return (

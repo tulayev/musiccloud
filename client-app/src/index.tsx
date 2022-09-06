@@ -1,5 +1,4 @@
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
 import App from './layout/App'
 import { store, StoreContext } from './store/store'
 import reportWebVitals from './reportWebVitals'

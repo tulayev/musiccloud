@@ -5,7 +5,7 @@ body {
     height: 100%;
 }
 
-* {
+p, span, a, h1, h2, h3, h4 {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #ffffff;
     letter-spacing: 1px;
@@ -238,14 +238,21 @@ img {
 }
 
 .grid-view-container {
-    display: flex;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: auto auto auto;
 }
 
 .grid-view-item {
-    max-width: 300px;
-    min-width: 150px;
-    margin: 0 20px;
+    margin: 20px;
+}
+
+.grid-view-item .image_cover {
+    width: 435px;
+    height: 370px;
+}
+
+.grid-view-item .image_cover img {
+    height: inherit;
 }
 
 .grid-view-item a {
@@ -254,7 +261,6 @@ img {
 
 .grid-view-info {
     font-weight: 300;
-    text-align: center;
     padding: 5px 0;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -280,7 +286,3 @@ img {
     margin: 10px 0;
 }
 /* End of the Track Details styles */
-
-.Toastify__toast-body div {
-    color: #181818 !important;
-}
