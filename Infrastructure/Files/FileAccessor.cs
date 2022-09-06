@@ -2,7 +2,6 @@ using Application.Interfaces;
 using Application.Files;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
 namespace Infrastructure.Files
@@ -22,16 +21,13 @@ namespace Infrastructure.Files
             _cloudinary = new Cloudinary(account);
         }
 
-        public async Task<FileUploadResult> AddFile(IFormFile formFile)
+        public async Task<FileUploadResult> AddFile(Stream stream, string filename)
         {
-            if (formFile.Length == 0)
-                return null;
-
-            string ext = Path.GetExtension(formFile.FileName).ToLower();
+            string ext = Path.GetExtension(filename).ToLower();
 
             var uploadResult = ext == ".mp3" 
-                ? await UploadAudio(formFile) 
-                : await UploadImage(formFile);
+                ? await UploadAudio(stream, filename) 
+                : await UploadImage(stream, filename);
 
             if (uploadResult.Error != null)
                 throw new Exception(uploadResult.Error.Message);
@@ -49,23 +45,19 @@ namespace Infrastructure.Files
             return result.Result == "ok" ? result.Result : null;
         }
 
-        private async Task<RawUploadResult> UploadAudio(IFormFile formFile)
+        private async Task<RawUploadResult> UploadAudio(Stream stream, string filename)
         {
-            await using var stream = formFile.OpenReadStream();
-
             return await _cloudinary.UploadAsync(new VideoUploadParams
             {
-                File = new FileDescription(formFile.FileName, stream)
+                File = new FileDescription(filename, stream)
             });
         }
         
-        private async Task<RawUploadResult> UploadImage(IFormFile formFile)
+        private async Task<RawUploadResult> UploadImage(Stream stream, string filename)
         {
-            await using var stream = formFile.OpenReadStream();
-
             return await _cloudinary.UploadAsync(new ImageUploadParams
             {
-                File = new FileDescription(formFile.FileName, stream),
+                File = new FileDescription(filename, stream),
                 Transformation = new Transformation().Height(500).Width(500).Crop("fill")
             });
         }

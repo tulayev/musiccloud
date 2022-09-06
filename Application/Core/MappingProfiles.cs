@@ -1,6 +1,4 @@
 using Application.DTOs;
-using Application.PlayLists;
-using Application.Tracks;
 using AutoMapper;
 using Models;
 
@@ -17,9 +15,6 @@ namespace Application.Core
                 .ForMember(d => d.Owner, o => o.MapFrom(s => s.User));
             
             CreateMap<User, AccountDTO>()
-                .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.DisplayName))
-                .ForMember(d => d.Username, o => o.MapFrom(s => s.UserName))
-                .ForMember(d => d.Bio, o => o.MapFrom(s => s.Bio))
                 .ForMember(d => d.Image, o => o.MapFrom(s => s.Image.Url));
         }
     }

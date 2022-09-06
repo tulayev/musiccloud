@@ -1,11 +1,10 @@
 using Application.Files;
-using Microsoft.AspNetCore.Http;
 
 namespace Application.Interfaces
 {
     public interface IFileAccessor
     {
-        Task<FileUploadResult> AddFile(IFormFile formFile);
+        Task<FileUploadResult> AddFile(Stream stream, string filename);
 
         Task<string> DeleteFile(string publicId);
     }

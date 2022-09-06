@@ -28,7 +28,9 @@ namespace Application.Files
             
             public async Task<Result<AppFile>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var fileUploadResult = await _fileAccessor.AddFile(request.File);
+                await using var stream = request.File.OpenReadStream();
+
+                var fileUploadResult = await _fileAccessor.AddFile(stream, request.File.FileName);
 
                 var file = new AppFile
                 {
