@@ -5,6 +5,7 @@ import PlayList from '../models/playlist'
 import Track from '../models/track'
 import { User, UserFormValues } from '../models/user'
 import { store } from '../store/store'
+import history from '../utils/history'
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -34,7 +35,7 @@ axios.interceptors.response.use(async res => {
                 toast.error(data)
             }
             if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
-                // push to 'not-found' route
+                history.replace('/not-found')
             }
             if (data.errors) {
                 const modalStateErrors = []
@@ -50,12 +51,11 @@ axios.interceptors.response.use(async res => {
             toast.error('unauthorized')
             break
         case 404:
-            toast.error('not found')
-            // push to 'not-found' route
+            history.replace('/not-found')
             break
         case 500:
             store.commonStore.setServerError(data)
-            // push to 'server-error' route
+            history.replace('/server-error')
             break
     }
 })

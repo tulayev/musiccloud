@@ -3,15 +3,17 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './layout/App'
 import { store, StoreContext } from './store/store'
 import reportWebVitals from './reportWebVitals'
+import CustomRouter from './components/CustomRouter'
+import history from './utils/history'
 
 const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement
 )
 root.render(
 	<StoreContext.Provider value={store}>
-		<BrowserRouter>
+		<CustomRouter history={history}>
 			<App />
-		</BrowserRouter>
+		</CustomRouter>
 	</StoreContext.Provider>
 )
 

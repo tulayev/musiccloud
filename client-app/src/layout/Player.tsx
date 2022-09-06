@@ -43,16 +43,14 @@ export default function Player() {
 
         audio.src = tempTrackList[trackIndex].path
         audio.load()
-
+        
         updateTimer = setInterval(remoteUpdate, 1000)
         audio.addEventListener('ended', next)
     }
 
     const play = () => {
         setPlaying(true)
-        setTimeout(() => {      
-            audio.play()
-        }, 150)
+        audio.play()
     }
 
     const pause = () => {
@@ -71,12 +69,12 @@ export default function Player() {
     }
     
     const next = () => {
-        if (trackIndex < tempTrackList.length - 1)
+        if (trackIndex < tempTrackList.length - 1) 
             setTrackIndex(trackIndex + 1)
         else 
             setTrackIndex(0)
         
-        loadTrack() 
+        loadTrack()
         play()
     }  
 
@@ -117,7 +115,7 @@ export default function Player() {
 
     useEffect(() => {
         loadTrack()
-    }, [trackIndex])
+    }, [])
 
     return (
         <div className="player_container">

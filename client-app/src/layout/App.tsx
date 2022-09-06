@@ -4,7 +4,7 @@ import Sidebar from './Sidebar'
 import Index from '../pages/Index'
 import TrackDetails from '../pages/tracks/TrackDetails'
 import TrackForm from '../pages/tracks/TrackForm'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
@@ -50,6 +50,10 @@ const App = () => {
 								<Route path="/login" element={<LoginForm />} />
 								<Route path="/not-found" element={<NotFound />} />
 								<Route path="/server-error" element={<ServerError />} />
+								<Route
+									path="*"
+									element={<Navigate to="/not-found" replace />}
+								/>
 							</Routes>
 						</div>
 					</div>
