@@ -10,6 +10,14 @@ namespace Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(Track).Assembly);
+            Seed.SeedInitialData(modelBuilder);
+        }
+
         public DbSet<AppFile> Files { get; set; }
 
         public DbSet<Track> Tracks { get; set; }
@@ -17,20 +25,5 @@ namespace Data
         public DbSet<PlayList> PlayLists { get; set; }
         
         public DbSet<PlayListTrack> PlayListTrack { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-
-            builder.Entity<PlayListTrack>(x => x.HasKey(pt => new { pt.Id }));
-            builder.Entity<PlayListTrack>()
-                .HasOne(p => p.PlayList)
-                .WithMany(t => t.Tracks)
-                .HasForeignKey(pt => pt.PlayListId);
-            builder.Entity<PlayListTrack>()
-                .HasOne(t => t.Track)
-                .WithMany(p => p.PlayLists)
-                .HasForeignKey(pt => pt.TrackId);
-        }
     }
 }

@@ -1,10 +1,7 @@
 using Application.Core;
 using Application.DTOs;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Data;
+using Application.Repository.IRepository;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Tracks
 {
@@ -14,23 +11,16 @@ namespace Application.Tracks
 
         public class Handler : IRequestHandler<Query, Result<List<TrackDTO>>>
         {
-            private readonly DataContext _ctx;
-            
-            private readonly IMapper _mapper;
+            private readonly IUnitOfWork _unitOfWork;
 
-            public Handler(DataContext ctx, IMapper mapper)
+            public Handler(IUnitOfWork unitOfWork)
             {
-                _ctx = ctx;
-                _mapper = mapper;
+                _unitOfWork = unitOfWork;
             }
 
             public async Task<Result<List<TrackDTO>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var tracks = await _ctx.Tracks
-                        .ProjectTo<TrackDTO>(_mapper.ConfigurationProvider)
-                        .ToListAsync();
-
-                return Result<List<TrackDTO>>.Success(tracks);
+                return Result<List<TrackDTO>>.Success(await _unitOfWork.TrackRepository.GetAll());
             }
         }
     }

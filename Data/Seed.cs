@@ -1,59 +1,63 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Models;
 
 namespace Data
 {
-    public class Seed
+    public static class Seed
     {
-        public static async Task SeedData(DataContext ctx, UserManager<User> userManager) 
+        public static void SeedInitialData(ModelBuilder builder) 
         {
-            var jon = new User { DisplayName = "Jon", UserName = "jon", Email = "jon@test.com" };
+            string email = "jon@test.com";
+            string username = "jon";
 
-            if (!userManager.Users.Any()) 
+            var jon = new User
             {
-                var users = new List<User>
-                {
-                    jon,
-                    new User { DisplayName = "Tom", UserName = "tom", Email = "tom@test.com" },
-                    new User { DisplayName = "Rob", UserName = "rob", Email = "rob@test.com" }
-                };
+                Id = Guid.NewGuid().ToString(),
+                DisplayName = username[0].ToString().ToUpper() + username.Substring(1),
+                UserName = username,
+                Email = email,
+                EmailConfirmed = false,
+                NormalizedEmail = email.ToUpper(),
+                NormalizedUserName = username.ToUpper(),
+                SecurityStamp = Guid.NewGuid().ToString().ToUpper(),
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
+            };
 
-                foreach (var user in users)
-                {
-                    await userManager.CreateAsync(user, "Pa$$w0rd");
-                }
-            }
+            var hasher = new PasswordHasher<User>();
+            jon.PasswordHash = hasher.HashPassword(jon, "Pa$$w0rd");
 
-            if (ctx.Tracks.Any())
-                return;
+            builder.Entity<User>().HasData(jon);
 
             var tracks = new List<Track>
             {
                 new Track
                 {
+                    Id = Guid.NewGuid(),
                     Title = "Byte",
                     Author = "Martin Garrix & Brooks",
                     Genre = "ElectroHouse",
-                    User = jon
+                    UserId = jon.Id
                 },
                 new Track
                 {
+                    Id = Guid.NewGuid(),
                     Title = "Take What You Want",
                     Author = "Post Malone, Ozzy Osbourne & Travi$ Scott",
                     Genre = "Hip-Hop",
-                    User = jon
+                    UserId = jon.Id
                 },
                 new Track
                 {
+                    Id = Guid.NewGuid(),
                     Title = "Marooned",
                     Author = "Pink Floyd",
                     Genre = "Rock",
-                    User = jon
+                    UserId = jon.Id
                 }
             };
 
-            await ctx.Tracks.AddRangeAsync(tracks);
-            await ctx.SaveChangesAsync();
+            builder.Entity<Track>().HasData(tracks);
         }
     }
 }

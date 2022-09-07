@@ -1,8 +1,7 @@
 using Application.Core;
 using Application.Interfaces;
-using Data;
+using Application.Repository.IRepository;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Models;
 
 namespace Application.Tracks
@@ -16,31 +15,24 @@ namespace Application.Tracks
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
-            private readonly DataContext _ctx;
+            private readonly IUnitOfWork _unitOfWork;
             
             private readonly IUserAccessor _userAccessor;
 
-            public Handler(DataContext ctx, IUserAccessor userAccessor)
+            public Handler(IUnitOfWork unitOfWork, IUserAccessor userAccessor)
             {
-                _ctx = ctx;
+                _unitOfWork = unitOfWork;
                 _userAccessor = userAccessor;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var user = await _ctx.Users.FirstOrDefaultAsync(u => u.UserName == _userAccessor.GetUsername());
-                var poster = await _ctx.Files.FirstOrDefaultAsync(f => f.Id == request.Track.Poster.Id);
-                var audio = await _ctx.Files.FirstOrDefaultAsync(f => f.Id == request.Track.Audio.Id);
+                var user = await _unitOfWork.UserRepository.GetAuthorizedUser(u => u.UserName == _userAccessor.GetUsername());
 
                 request.Track.User = user;
-                request.Track.Poster = poster;
-                request.Track.Audio = audio;
 
-                _ctx.Tracks.Add(request.Track);
-                bool result = await _ctx.SaveChangesAsync() > 0;
-
-                if (!result)
-                    return Result<Unit>.Failure("Не удалось загрузить трек");
+                _unitOfWork.TrackRepository.Add(request.Track);
+                await _unitOfWork.SaveChanges();
 
                 return Result<Unit>.Success(Unit.Value);
             }

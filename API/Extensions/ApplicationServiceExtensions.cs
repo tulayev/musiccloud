@@ -1,5 +1,7 @@
 using Application.Core;
 using Application.Interfaces;
+using Application.Repository;
+using Application.Repository.IRepository;
 using Application.Tracks;
 using Data;
 using Infrastructure.Files;
@@ -23,10 +25,12 @@ namespace API.Extensions
                     policy.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
                 });
             });
+
             services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IFileAccessor, FileAccessor>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
 
             return services;

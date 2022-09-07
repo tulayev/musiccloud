@@ -1,6 +1,5 @@
 using API.Extensions;
 using API.Middleware;
-using Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 
@@ -15,7 +14,7 @@ builder.Services.AddControllers(options =>
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 
-var app = await builder.Build().MigrateDatabaseAsync<DataContext>();
+var app = await builder.Build().MigrateDatabaseAsync();
 
 app.UseMiddleware<ExceptionMiddleware>();
 

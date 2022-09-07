@@ -1,6 +1,6 @@
 using Application.Core;
 using Application.Interfaces;
-using Data;
+using Application.Repository.IRepository;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Models;
@@ -16,13 +16,13 @@ namespace Application.Files
 
         public class Handler : IRequestHandler<Command, Result<AppFile>>    
         {
-            private readonly DataContext _ctx;
-            
+            private readonly IUnitOfWork _unitOfWork;
+         
             private readonly IFileAccessor _fileAccessor;
             
-            public Handler(DataContext ctx, IFileAccessor fileAccessor)
+            public Handler(IUnitOfWork unitOfWork, IFileAccessor fileAccessor)
             {
-                _ctx = ctx;
+                _unitOfWork = unitOfWork;
                 _fileAccessor = fileAccessor;
             }
             
@@ -38,14 +38,10 @@ namespace Application.Files
                     Url = fileUploadResult.Url
                 };
 
-                _ctx.Files.Add(file);
+                _unitOfWork.FileRepository.Add(file);
+                await _unitOfWork.SaveChanges();
 
-                bool result = await _ctx.SaveChangesAsync() > 0;
-
-                if (result)
-                    return Result<AppFile>.Success(file);
-
-                return Result<AppFile>.Failure("Возникла ошибка при загрузке файла");
+                return Result<AppFile>.Success(file);
             }
         }
     }

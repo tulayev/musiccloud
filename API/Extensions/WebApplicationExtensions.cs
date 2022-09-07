@@ -1,23 +1,19 @@
 using Data;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Models;
 
 namespace API.Extensions
 {
     public static class WebApplicationExtensions
     {
-        public static async Task<WebApplication> MigrateDatabaseAsync<T>(this WebApplication app) where T : DbContext
+        public static async Task<WebApplication> MigrateDatabaseAsync(this WebApplication app)
         {
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var db = services.GetRequiredService<T>();
-                    var userManager = services.GetRequiredService<UserManager<User>>();
+                    var db = services.GetRequiredService<DataContext>();
                     await db.Database.MigrateAsync();
-                    await Seed.SeedData(db as DataContext, userManager);
                 }
                 catch (Exception ex)
                 {

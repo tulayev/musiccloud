@@ -40,10 +40,10 @@ const TrackForm = () => {
 
     function handleFormSubmit(track: Track) {
         if (track.id.length === 0) {
-            if (!audioFile) {
-                toast.error('Пожалуйста загрузите аудиофайл')
-                return
-            }
+            // if (!audioFile) {
+            //     toast.error('Пожалуйста загрузите аудиофайл')
+            //     return
+            // }
             const newTrack = {
                 ...track,
                 id: uuidv4(),
