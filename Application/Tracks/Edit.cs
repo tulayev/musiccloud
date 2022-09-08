@@ -37,10 +37,7 @@ namespace Application.Tracks
                 track.Author = request.Track.Author;
                 track.Genre = request.Track.Genre;
                 
-                bool result = await _ctx.SaveChangesAsync() > 0;
-
-                if (!result)
-                    return Result<Unit>.Failure("Не удалось изменить трек");
+                await _ctx.SaveChangesAsync();
 
                 return Result<Unit>.Success(Unit.Value);
             }

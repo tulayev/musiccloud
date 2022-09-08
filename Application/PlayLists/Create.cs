@@ -33,10 +33,8 @@ namespace Application.PlayLists
                 request.PlayList.User = user;
 
                 _ctx.PlayLists.Add(request.PlayList);
-                bool result = await _ctx.SaveChangesAsync() > 0;
-
-                if (!result)
-                    return Result<Unit>.Failure("Не удалось создать пдейлист");
+                
+                await _ctx.SaveChangesAsync();
 
                 return Result<Unit>.Success(Unit.Value);
             }

@@ -48,10 +48,7 @@ namespace Application.Tracks
                 }
 
                 _ctx.Tracks.Remove(track);
-                bool result = await _ctx.SaveChangesAsync() > 0;
-
-                if (!result)
-                    return Result<Unit>.Failure("Не удалось удалить трек");
+                await _ctx.SaveChangesAsync();
 
                 return Result<Unit>.Success(Unit.Value);
             }

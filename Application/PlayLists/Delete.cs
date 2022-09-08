@@ -28,10 +28,8 @@ namespace Application.PlayLists
                     return null;
 
                 _ctx.PlayLists.Remove(playList);
-                bool result = await _ctx.SaveChangesAsync() > 0;
-
-                if (!result)
-                    return Result<Unit>.Failure("Не удалось удалить плейлист");
+                
+                await _ctx.SaveChangesAsync();
 
                 return Result<Unit>.Success(Unit.Value);
             }

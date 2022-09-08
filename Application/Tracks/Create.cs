@@ -8,12 +8,12 @@ namespace Application.Tracks
 {
     public class Create
     {
-        public class Command : IRequest<Result<Unit>>
+        public class Command : IRequest<Result<bool>>
         {
             public Track Track { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
+        public class Handler : IRequestHandler<Command, Result<bool>>
         {
             private readonly IUnitOfWork _unitOfWork;
             
@@ -25,7 +25,7 @@ namespace Application.Tracks
                 _userAccessor = userAccessor;
             }
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<bool>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var user = await _unitOfWork.UserRepository.GetAuthorizedUser(u => u.UserName == _userAccessor.GetUsername());
 
@@ -34,7 +34,7 @@ namespace Application.Tracks
                 _unitOfWork.TrackRepository.Add(request.Track);
                 await _unitOfWork.SaveChanges();
 
-                return Result<Unit>.Success(Unit.Value);
+                return Result<bool>.Success(true);
             }
         }
     }

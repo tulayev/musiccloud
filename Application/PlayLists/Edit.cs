@@ -33,10 +33,7 @@ namespace Application.PlayLists
 
                 playList.Name = request.PlayList.Name;
 
-                bool result = await _ctx.SaveChangesAsync() > 0;
-
-                if (!result)
-                    return Result<Unit>.Failure("Не удалось изменить плейлист");
+                await _ctx.SaveChangesAsync();
 
                 return Result<Unit>.Success(Unit.Value);
             }

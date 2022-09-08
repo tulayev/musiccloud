@@ -3,7 +3,9 @@ using Application.Interfaces;
 using Application.Repository;
 using Application.Repository.IRepository;
 using Application.Tracks;
+using Application.Validations;
 using Data;
+using FluentValidation;
 using Infrastructure.Files;
 using Infrastructure.Security;
 using MediatR;
@@ -28,6 +30,8 @@ namespace API.Extensions
 
             services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            services.AddValidatorsFromAssembly(typeof(ValidationBehaviour<,>).Assembly);
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IFileAccessor, FileAccessor>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();

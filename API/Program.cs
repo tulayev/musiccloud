@@ -26,6 +26,8 @@ if (app.Environment.IsDevelopment())
 
 // app.UseHttpsRedirection();
 
+app.UseFluentValidationExceptionHandler();
+
 app.UseCors("Cors");
 
 app.UseAuthentication();
