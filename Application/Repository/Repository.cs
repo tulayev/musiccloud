@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Application.Repository.IRepository;
 using AutoMapper;
 using Data;
@@ -25,12 +26,27 @@ namespace Application.Repository
             return await dbSet.ToListAsync();
         }
 
+        public async Task<T> Get(Expression<Func<T, bool>> predicate, string includes = null)
+        {
+            IQueryable<T> query = dbSet;
+
+            if (includes != null)
+            {
+                foreach (string include in includes.Split(new char[] { ',' }, StringSplitOptions.TrimEntries))
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            return await query.FirstOrDefaultAsync(predicate);
+        }
+
         public virtual void Add(T entity)
         {
             dbSet.Add(entity);
         }
 
-        public void Delete(T entity)
+        public virtual void Delete(T entity)
         {
             dbSet.Remove(entity);
         }

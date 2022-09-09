@@ -1,8 +1,7 @@
 using Application.Core;
 using Application.Interfaces;
-using Data;
+using Application.Repository.IRepository;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Tracks
 {
@@ -15,22 +14,20 @@ namespace Application.Tracks
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
-            private readonly DataContext _ctx;
+            private readonly IUnitOfWork _unitOfWork;
             
             private readonly IFileAccessor _fileAccessor;
 
-            public Handler(DataContext ctx, IFileAccessor fileAccessor)
+            public Handler(IUnitOfWork unitOfWork, IFileAccessor fileAccessor)
             {
-                _ctx = ctx;
+                _unitOfWork = unitOfWork;
                 _fileAccessor = fileAccessor;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var track = await _ctx.Tracks
-                    .Include(t => t.Audio)
-                    .Include(t => t.Poster)
-                    .FirstOrDefaultAsync(t => t.Id == request.Id);
+                var track = await _unitOfWork.TrackRepository
+                    .Get(predicate: t => t.Id == request.Id, includes: "Poster, Audio");
 
                 if (track == null)
                     return null;
@@ -38,17 +35,17 @@ namespace Application.Tracks
                 if (track.Poster != null) 
                 {
                     await _fileAccessor.DeleteFile(track.Poster.PublicId);
-                    _ctx.Files.Remove(track.Poster);
+                    _unitOfWork.FileRepository.Delete(track.Poster);
                 }
 
                 if (track.Audio != null)
                 {
                     await _fileAccessor.DeleteFile(track.Audio.PublicId);
-                    _ctx.Files.Remove(track.Audio);
+                    _unitOfWork.FileRepository.Delete(track.Audio);
                 }
 
-                _ctx.Tracks.Remove(track);
-                await _ctx.SaveChangesAsync();
+                _unitOfWork.TrackRepository.Delete(track);
+                await _unitOfWork.SaveChanges();
 
                 return Result<Unit>.Success(Unit.Value);
             }

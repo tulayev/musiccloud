@@ -1,9 +1,7 @@
 using Application.Core;
-using Application.Interfaces;
-using AutoMapper;
-using Data;
+using Application.DTOs;
+using Application.Repository.IRepository;
 using MediatR;
-using Models;
 
 namespace Application.Tracks
 {
@@ -11,33 +9,23 @@ namespace Application.Tracks
     {
         public class Command : IRequest<Result<Unit>> 
         {
-            public Track Track { get; set; }
+            public TrackDTO Track { get; set; }
         }
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
-            private readonly DataContext _ctx;
-            
-            private readonly IMapper _mapper;
+            private readonly IUnitOfWork _unitOfWork;
 
-            public Handler(DataContext ctx, IMapper mapper)
+            public Handler(IUnitOfWork unitOfWork)
             {
-                _ctx = ctx;
-                _mapper = mapper;
+                _unitOfWork = unitOfWork;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var track = await _ctx.Tracks.FindAsync(request.Track.Id);
-
-                if (track == null) 
-                    return null;
-
-                track.Title = request.Track.Title;
-                track.Author = request.Track.Author;
-                track.Genre = request.Track.Genre;
+                await _unitOfWork.TrackRepository.Update(request.Track);
                 
-                await _ctx.SaveChangesAsync();
+                await _unitOfWork.SaveChanges();
 
                 return Result<Unit>.Success(Unit.Value);
             }

@@ -1,3 +1,4 @@
+using Application.Core;
 using Application.Tracks;
 using Data;
 using FluentValidation;
@@ -10,13 +11,12 @@ namespace Application.Validations.Tracks
         public CreateCommandValidator(DataContext ctx, IMediator mediator) 
         {
             RuleFor(x => x.Track.Title)
-                .NotEmpty();
+                .NotEmpty()
+                .WithState(x => Result<bool>.Failure(new Exception("Title is required")));
             
             RuleFor(x => x.Track.Author)
-                .NotEmpty();
-            
-            RuleFor(x => x.Track.Audio)
-                .NotEmpty();
+                .NotEmpty()
+                .WithState(x => Result<bool>.Failure(new Exception("Author is required")));
         }
     }
 }

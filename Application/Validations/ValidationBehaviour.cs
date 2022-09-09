@@ -22,10 +22,11 @@ namespace Application.Validations
                 .Select(async x => await x.ValidateAsync(validationContext))))
                 .SelectMany(x => x.Errors)
                 .Where(x => x != null)
-                .ToList();
+                .Select(x => x.CustomState)
+                .Cast<TResponse>();
 
             if (errors.Any())
-                throw new ValidationException(errors);
+                return errors.First();
 
             try
             {

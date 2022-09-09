@@ -28,32 +28,32 @@ namespace API.Extensions
             return app;
         }
 
-        public static void UseFluentValidationExceptionHandler(this WebApplication app)
-        {
-            app.UseExceptionHandler(x => 
-            {
-                x.Run(async context => 
-                {
-                    var errorFeature = context.Features.Get<IExceptionHandlerFeature>();
-                    var exception = errorFeature.Error;
+        // public static void UseFluentValidationExceptionHandler(this WebApplication app)
+        // {
+        //     app.UseExceptionHandler(x => 
+        //     {
+        //         x.Run(async context => 
+        //         {
+        //             var errorFeature = context.Features.Get<IExceptionHandlerFeature>();
+        //             var exception = errorFeature.Error;
 
-                    if (!(exception is ValidationException validationException))
-                    {
-                        throw exception;
-                    }
+        //             if (!(exception is ValidationException validationException))
+        //             {
+        //                 throw exception;
+        //             }
 
-                    var errors = validationException.Errors.Select(error => new
-                    {
-                        error.PropertyName,
-                        error.ErrorMessage
-                    });
+        //             var errors = validationException.Errors.Select(error => new
+        //             {
+        //                 error.PropertyName,
+        //                 error.ErrorMessage
+        //             });
 
-                    var errorText = JsonSerializer.Serialize(errors);
-                    context.Response.StatusCode = 400;
-                    context.Response.ContentType = "application/json";
-                    await context.Response.WriteAsync(errorText, Encoding.UTF8);
-                });
-            });
-        }
+        //             var errorText = JsonSerializer.Serialize(errors);
+        //             context.Response.StatusCode = 400;
+        //             context.Response.ContentType = "application/json";
+        //             await context.Response.WriteAsync(errorText, Encoding.UTF8);
+        //         });
+        //     });
+        // }
     }
 }

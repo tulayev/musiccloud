@@ -1,3 +1,4 @@
+using Application.DTOs;
 using Application.Tracks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +29,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Edit(Guid id, Track track)
+        public async Task<IActionResult> Edit(Guid id, TrackDTO track)
         {
             track.Id = id;
             return HandleResult(await Mediator.Send(new Edit.Command { Track = track }));

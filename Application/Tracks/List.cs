@@ -20,7 +20,7 @@ namespace Application.Tracks
 
             public async Task<Result<List<TrackDTO>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return Result<List<TrackDTO>>.Success(await _unitOfWork.TrackRepository.GetAll());
+                return Result<List<TrackDTO>>.Success(await _unitOfWork.TrackRepository.GetWithRelatedData());
             }
         }
     }
