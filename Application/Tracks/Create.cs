@@ -27,12 +27,15 @@ namespace Application.Tracks
 
             public async Task<Result<bool>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var user = await _unitOfWork.UserRepository.GetAuthorizedUser(u => u.UserName == _userAccessor.GetUsername());
+                var user = _unitOfWork.GetQueryable<User>()
+                    .FirstOrDefault(u => u.UserName == _userAccessor.GetUsername());
 
-                request.Track.User = user;
+                request.Track.UserId = user.Id;
+                request.Track.AudioId = request.Track.Audio.Id;
+                request.Track.PosterId = request.Track.Poster.Id;
 
-                _unitOfWork.TrackRepository.Add(request.Track);
-                await _unitOfWork.SaveChanges();
+                await _unitOfWork.AddAsync(request.Track);
+                await _unitOfWork.SaveChangesAsync();
 
                 return Result<bool>.Success(true);
             }

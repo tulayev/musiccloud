@@ -38,8 +38,8 @@ namespace Application.Files
                     Url = fileUploadResult.Url
                 };
 
-                _unitOfWork.FileRepository.Add(file);
-                await _unitOfWork.SaveChanges();
+                await _unitOfWork.AddAsync(file);
+                await _unitOfWork.SaveChangesAsync();
 
                 return Result<AppFile>.Success(file);
             }

@@ -1,7 +1,9 @@
 using Application.Core;
 using Application.DTOs;
 using Application.Repository.IRepository;
+using AutoMapper;
 using MediatR;
+using Models;
 
 namespace Application.Tracks
 {
@@ -15,17 +17,23 @@ namespace Application.Tracks
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly IUnitOfWork _unitOfWork;
+            
+            private readonly IMapper _mapper;
 
-            public Handler(IUnitOfWork unitOfWork)
+            public Handler(IUnitOfWork unitOfWork, IMapper mapper)
             {
                 _unitOfWork = unitOfWork;
+                _mapper = mapper;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                await _unitOfWork.TrackRepository.Update(request.Track);
+                var track = _unitOfWork.GetQueryable<Track>()
+                    .FirstOrDefault(t => t.Id == request.Track.Id);
+
+                _mapper.Map(request.Track, track);
                 
-                await _unitOfWork.SaveChanges();
+                await _unitOfWork.SaveChangesAsync();
 
                 return Result<Unit>.Success(Unit.Value);
             }

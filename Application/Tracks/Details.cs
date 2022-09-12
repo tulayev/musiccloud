@@ -2,7 +2,9 @@ using Application.Core;
 using Application.DTOs;
 using Application.Repository.IRepository;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
+using Models;
 
 namespace Application.Tracks
 {
@@ -27,7 +29,9 @@ namespace Application.Tracks
 
             public async Task<Result<TrackDTO>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var track = await _unitOfWork.TrackRepository.GetWithRelatedData(request.Id);
+                var track = _unitOfWork.GetQueryable<Track>()
+                    .ProjectTo<TrackDTO>(_mapper.ConfigurationProvider)
+                    .FirstOrDefault(dto => dto.Id == request.Id);
 
                 return Result<TrackDTO>.Success(track);
             }
