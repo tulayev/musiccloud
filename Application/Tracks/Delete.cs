@@ -2,6 +2,8 @@ using Application.Core;
 using Application.Interfaces;
 using Application.Repository.IRepository;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Models;
 
 namespace Application.Tracks
 {
@@ -26,8 +28,11 @@ namespace Application.Tracks
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var track = await _unitOfWork.TrackRepository
-                    .Get(predicate: t => t.Id == request.Id, includes: "Poster, Audio");
+                var track = _unitOfWork
+                    .GetQueryable<Track>()
+                    .Include(t => t.Poster)
+                    .Include(t => t.Audio)
+                    .FirstOrDefault(t => t.Id == request.Id);
 
                 if (track == null)
                     return null;
@@ -35,17 +40,17 @@ namespace Application.Tracks
                 if (track.Poster != null) 
                 {
                     await _fileAccessor.DeleteFile(track.Poster.PublicId);
-                    _unitOfWork.FileRepository.Delete(track.Poster);
+                    _unitOfWork.Delete(track.Poster);
                 }
 
                 if (track.Audio != null)
                 {
                     await _fileAccessor.DeleteFile(track.Audio.PublicId);
-                    _unitOfWork.FileRepository.Delete(track.Audio);
+                    _unitOfWork.Delete(track.Audio);
                 }
 
-                _unitOfWork.TrackRepository.Delete(track);
-                await _unitOfWork.SaveChanges();
+                _unitOfWork.Delete(track);
+                await _unitOfWork.SaveChangesAsync();
 
                 return Result<Unit>.Success(Unit.Value);
             }
