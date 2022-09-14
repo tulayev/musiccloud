@@ -15,4 +15,6 @@ export default interface Track {
     uploader?: Uploader
     poster?: AppFile
     audio?: AppFile
+    posterId?: number
+    audioId?: number
 }

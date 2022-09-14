@@ -24,7 +24,10 @@ namespace API.Extensions
             });
             services.AddCors(options => {
                 options.AddPolicy("Cors", policy => {
-                    policy.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
+                    policy.AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()
+                        .WithOrigins(config["ClientUrl"]);
                 });
             });
 
@@ -36,6 +39,7 @@ namespace API.Extensions
             services.AddScoped<IFileAccessor, FileAccessor>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
+            services.AddSignalR();
 
             return services;
         }    

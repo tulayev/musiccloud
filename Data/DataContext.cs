@@ -25,5 +25,7 @@ namespace Data
         public DbSet<PlayList> PlayLists { get; set; }
         
         public DbSet<PlayListTrack> PlayListTrack { get; set; }
+        
+        public DbSet<Comment> Comments { get; set; }
     }
 }

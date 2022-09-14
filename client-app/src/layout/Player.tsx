@@ -114,8 +114,9 @@ export default function Player() {
     }
 
     useEffect(() => {
-        loadTrack()
-    }, [])
+        if (trackIndex >= 0)
+            loadTrack()
+    }, [trackIndex])
 
     return (
         <div className="player_container">

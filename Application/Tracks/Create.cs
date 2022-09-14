@@ -1,7 +1,10 @@
 using Application.Core;
+using Application.DTOs.Tracks;
 using Application.Interfaces;
 using Application.Repository.IRepository;
+using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Models;
 
 namespace Application.Tracks
@@ -10,7 +13,7 @@ namespace Application.Tracks
     {
         public class Command : IRequest<Result<bool>>
         {
-            public Track Track { get; set; }
+            public CreateTrackDTO Track { get; set; }
         }
 
         public class Handler : IRequestHandler<Command, Result<bool>>
@@ -19,22 +22,25 @@ namespace Application.Tracks
             
             private readonly IUserAccessor _userAccessor;
 
-            public Handler(IUnitOfWork unitOfWork, IUserAccessor userAccessor)
+            private readonly IMapper _mapper;
+
+            public Handler(IUnitOfWork unitOfWork, IUserAccessor userAccessor, IMapper mapper)
             {
                 _unitOfWork = unitOfWork;
                 _userAccessor = userAccessor;
+                _mapper = mapper;
             }
 
             public async Task<Result<bool>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var user = _unitOfWork.GetQueryable<User>()
-                    .FirstOrDefault(u => u.UserName == _userAccessor.GetUsername());
+                string username = _userAccessor.GetUsername();
+
+                var user = await _unitOfWork.GetQueryable<User>()
+                    .FirstOrDefaultAsync(u => u.UserName == username);
 
                 request.Track.UserId = user.Id;
-                request.Track.AudioId = request.Track.Audio.Id;
-                request.Track.PosterId = request.Track.Poster.Id;
 
-                await _unitOfWork.AddAsync(request.Track);
+                await _unitOfWork.AddAsync(_mapper.Map<Track>(request.Track));
                 await _unitOfWork.SaveChangesAsync();
 
                 return Result<bool>.Success(true);

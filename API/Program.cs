@@ -1,5 +1,6 @@
 using API.Extensions;
 using API.Middleware;
+using API.SignalR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 
@@ -28,12 +29,18 @@ if (app.Environment.IsDevelopment())
 
 // app.UseFluentValidationExceptionHandler();
 
+app.UseRouting();
+
 app.UseCors("Cors");
 
 app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseEndpoints(endpoints => 
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<ChatHub>("/chat");
+});
 
 app.Run();
