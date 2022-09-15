@@ -47,8 +47,8 @@ const TrackForm = () => {
             const newTrack = {
                 ...track,
                 id: uuidv4(),
-                poster: imageFile,
-                audio: audioFile
+                posterId: imageFile?.id,
+                audioId: audioFile?.id
             }
             createTrack(newTrack)
                 .then(() => navigate(`/tracks/${newTrack.id}`))
@@ -78,7 +78,7 @@ const TrackForm = () => {
                 initialValues={track} 
                 onSubmit={values => handleFormSubmit(values)}
             >
-                {({ handleSubmit, isValid, isSubmitting, dirty }) => (
+                {({ handleSubmit, isSubmitting }) => (
                     <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
                         <MyTextInput name="title" placeholder="Title"  />
                         <MyTextInput name="author" placeholder="Author" />

@@ -23,5 +23,7 @@ namespace Models
         public AppFile Audio { get; set; }
 
         public List<PlayListTrack> PlayLists { get; set; }
+
+        public List<Comment> Comments {get; set; }
     }
 }

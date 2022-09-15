@@ -28,11 +28,11 @@ namespace Application.Tracks
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var track = _unitOfWork
+                var track = await _unitOfWork
                     .GetQueryable<Track>()
                     .Include(t => t.Poster)
                     .Include(t => t.Audio)
-                    .FirstOrDefault(t => t.Id == request.Id);
+                    .FirstOrDefaultAsync(t => t.Id == request.Id);
 
                 if (track == null)
                     return null;

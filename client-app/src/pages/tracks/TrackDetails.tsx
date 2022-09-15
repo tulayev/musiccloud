@@ -4,6 +4,7 @@ import { Button } from 'semantic-ui-react'
 import Spinner from '../../layout/Spinner'
 import { observer } from 'mobx-react-lite'
 import { useStore } from '../../store/store'
+import TrackDetailsChat from './TrackDetailsChat'
 
 const TrackDetails = () => {
     const {id} = useParams<{id: string}>()
@@ -57,6 +58,8 @@ const TrackDetails = () => {
                     </>
                 }
             </div>  
+
+            <TrackDetailsChat trackId={track.id} />
         </div>
     )
 }
