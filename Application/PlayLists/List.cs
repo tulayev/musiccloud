@@ -1,11 +1,12 @@
 using Application.Core;
-using Application.DTOs;
+using Application.DTOs.PlayLists;
 using Application.Interfaces;
+using Application.Repository.IRepository;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Models;
 
 namespace Application.PlayLists
 {
@@ -15,24 +16,27 @@ namespace Application.PlayLists
 
         public class Handler : IRequestHandler<Query, Result<List<PlayListDTO>>>
         {
-            private readonly DataContext _ctx;
+            private readonly IUnitOfWork _unitOfWork;
             
             private readonly IUserAccessor _userAccessor;
             
             private readonly IMapper _mapper;
 
-            public Handler(DataContext ctx, IUserAccessor userAccessor, IMapper mapper)
+            public Handler(IUnitOfWork unitOfWork, IUserAccessor userAccessor, IMapper mapper)
             {
-                _ctx = ctx;
+                _unitOfWork = unitOfWork;
                 _userAccessor = userAccessor;
                 _mapper = mapper;
             }
 
             public async Task<Result<List<PlayListDTO>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var user = await _ctx.Users.FirstOrDefaultAsync(u => u.UserName == _userAccessor.GetUsername());
+                string username = _userAccessor.GetUsername();  
 
-                var userPlayLists = await _ctx.PlayLists
+                var user = await _unitOfWork.GetQueryable<User>()
+                    .FirstOrDefaultAsync(u => u.UserName == username);
+
+                var userPlayLists = await _unitOfWork.GetQueryable<PlayList>()
                         .ProjectTo<PlayListDTO>(_mapper.ConfigurationProvider)
                         .Where(p => p.Owner.Username == user.UserName)
                         .ToListAsync();

@@ -1,3 +1,4 @@
+using Application.DTOs.PlayLists;
 using Application.PlayLists;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -35,6 +36,12 @@ namespace API.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
+        }
+
+        [HttpPost("addtoplaylist")]
+        public async Task<IActionResult> AddToPlayList(AddTrackToPlayListDTO addTrackToPlayListDTO)
+        {
+            return HandleResult(await Mediator.Send(new AddTrack.Command { AddTrackToPlayListDTO = addTrackToPlayListDTO }));
         }
     }
 }

@@ -1,10 +1,11 @@
 using Application.Core;
-using Application.DTOs;
+using Application.DTOs.PlayLists;
+using Application.Repository.IRepository;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Models;
 
 namespace Application.PlayLists
 {
@@ -17,19 +18,19 @@ namespace Application.PlayLists
 
         public class Handler : IRequestHandler<Query, Result<PlayListDTO>>
         {
-            private readonly DataContext _ctx;
+            private readonly IUnitOfWork _unitOfWork;
             
             private readonly IMapper _mapper;
 
-            public Handler(DataContext ctx, IMapper mapper)
+            public Handler(IUnitOfWork unitOfWork, IMapper mapper)
             {
-                _ctx = ctx;
+                _unitOfWork = unitOfWork;
                 _mapper = mapper;
             }
 
             public async Task<Result<PlayListDTO>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var playList = await _ctx.PlayLists
+                var playList = await _unitOfWork.GetQueryable<PlayList>()
                     .ProjectTo<PlayListDTO>(_mapper.ConfigurationProvider)
                     .FirstOrDefaultAsync(x => x.Id == request.Id);
 

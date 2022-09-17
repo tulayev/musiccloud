@@ -1,41 +1,40 @@
 using Application.Core;
-using AutoMapper;
-using Data;
+using Application.Repository.IRepository;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Models;
 
 namespace Application.PlayLists
 {
     public class Edit
     {
-        public class Command : IRequest<Result<Unit>> 
+        public class Command : IRequest<Result<bool>> 
         {
             public PlayList PlayList { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
+        public class Handler : IRequestHandler<Command, Result<bool>>
         {
-            private readonly DataContext _ctx;
-            private readonly IMapper _mapper;
+            private readonly IUnitOfWork _unitOfWork;
 
-            public Handler(DataContext ctx, IMapper mapper)
+            public Handler(IUnitOfWork unitOfWork)
             {
-                _ctx = ctx;
-                _mapper = mapper;
+                _unitOfWork = unitOfWork;
             }
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<bool>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var playList = await _ctx.PlayLists.FindAsync(request.PlayList.Id);
+                var playList = await _unitOfWork.GetQueryable<PlayList>()
+                    .FirstOrDefaultAsync(p => p.Id == request.PlayList.Id);
 
                 if (playList == null) 
                     return null;
 
                 playList.Name = request.PlayList.Name;
 
-                await _ctx.SaveChangesAsync();
+                await _unitOfWork.SaveChangesAsync();
 
-                return Result<Unit>.Success(Unit.Value);
+                return Result<bool>.Success(true);
             }
         }
     }

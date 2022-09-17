@@ -28,8 +28,7 @@ namespace Application.Tracks
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var track = await _unitOfWork
-                    .GetQueryable<Track>()
+                var track = await _unitOfWork.GetQueryable<Track>()
                     .Include(t => t.Poster)
                     .Include(t => t.Audio)
                     .FirstOrDefaultAsync(t => t.Id == request.Id);

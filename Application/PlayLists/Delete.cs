@@ -1,6 +1,8 @@
 using Application.Core;
-using Data;
+using Application.Repository.IRepository;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Models;
 
 namespace Application.PlayLists
 {
@@ -13,23 +15,26 @@ namespace Application.PlayLists
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
-            private readonly DataContext _ctx;
+            private readonly IUnitOfWork _unitOfWork;
 
-            public Handler(DataContext ctx)
+            public Handler(IUnitOfWork unitOfWork)
             {
-                _ctx = ctx;
+                _unitOfWork = unitOfWork;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var playList = await _ctx.PlayLists.FindAsync(request.Id);
+                var playList = await _unitOfWork.GetQueryable<PlayList>()
+                    .FirstOrDefaultAsync(p => p.Id == request.Id);
 
                 if (playList == null)
                     return null;
 
-                _ctx.PlayLists.Remove(playList);
+                playList.Tracks?.Clear();
+
+                _unitOfWork.Delete(playList);
                 
-                await _ctx.SaveChangesAsync();
+                await _unitOfWork.SaveChangesAsync();
 
                 return Result<Unit>.Success(Unit.Value);
             }

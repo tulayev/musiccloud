@@ -43,11 +43,24 @@ export default observer(function TrackDetailsChat({trackId}: Props) {
                         <Comment key={comment.id}>
                             <Comment.Avatar src={ comment.image || '/assets/images/icons/avatar.png' } />
                             <Comment.Content>
-                                <Comment.Author as="a">{ comment.displayName }</Comment.Author>
+                                <Comment.Author 
+                                    style={{ color: '#ffffff' }} 
+                                    as="a"
+                                >
+                                    { comment.displayName }
+                                </Comment.Author>
+
                                 <Comment.Metadata style={{ color: '#ffffff' }}>
-                                    <div>{ comment.createdAt.toString() }</div>
+                                    <div>
+                                        { comment.createdAt.toString() }
+                                    </div>
                                 </Comment.Metadata>
-                                <Comment.Text>{ comment.body }</Comment.Text>
+                                
+                                <Comment.Text 
+                                    style={{ color: '#ffffff' }}
+                                >
+                                    { comment.body }
+                                </Comment.Text>
                             </Comment.Content>
                         </Comment>
                     ))}
