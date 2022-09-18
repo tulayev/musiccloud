@@ -1,6 +1,6 @@
 using Application.Core;
 using Application.Interfaces;
-using Data;
+using Application.Repository.IRepository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Models;
@@ -9,34 +9,37 @@ namespace Application.PlayLists
 {
     public class Create
     {
-        public class Command : IRequest<Result<Unit>>
+        public class Command : IRequest<Result<bool>>
         {
             public PlayList PlayList { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
+        public class Handler : IRequestHandler<Command, Result<bool>>
         {
-            private readonly DataContext _ctx;
+            private readonly IUnitOfWork _unitOfWork;
             
             private readonly IUserAccessor _userAccessor;
 
-            public Handler(DataContext ctx, IUserAccessor userAccessor)
+            public Handler(IUnitOfWork unitOfWork, IUserAccessor userAccessor)
             {
-                _ctx = ctx;
+                _unitOfWork = unitOfWork;
                 _userAccessor = userAccessor;
             }
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<bool>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var user = await _ctx.Users.FirstOrDefaultAsync(u => u.UserName == _userAccessor.GetUsername());
+                string username = _userAccessor.GetUsername();
 
-                request.PlayList.User = user;
+                var user = await _unitOfWork.GetQueryable<User>()
+                    .FirstOrDefaultAsync(u => u.UserName == username);
 
-                _ctx.PlayLists.Add(request.PlayList);
+                request.PlayList.UserId = user.Id;
+
+                await _unitOfWork.AddAsync(request.PlayList);
                 
-                await _ctx.SaveChangesAsync();
+                await _unitOfWork.SaveChangesAsync();
 
-                return Result<Unit>.Success(Unit.Value);
+                return Result<bool>.Success(true);
             }
         }
     }

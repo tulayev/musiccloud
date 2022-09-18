@@ -2,6 +2,8 @@ using Application.DTOs.Tracks;
 using Application.DTOs;
 using AutoMapper;
 using Models;
+using Application.DTOs.PlayLists;
+using Application.DTOs.Comments;
 
 namespace Application.Core
 {
@@ -16,6 +18,8 @@ namespace Application.Core
             
             CreateMap<EditTrackDTO, Track>();
 
+            CreateMap<AddTrackToPlayListDTO, PlayListTrack>();
+
             CreateMap<PlayList, PlayListDTO>()
                 .ForMember(d => d.Owner, o => o.MapFrom(s => s.User));
             
@@ -25,7 +29,7 @@ namespace Application.Core
             CreateMap<Comment, CommentDTO>()
                 .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.Author.DisplayName))
                 .ForMember(d => d.Username, o => o.MapFrom(s => s.Author.UserName))
-                .ForMember(d => d.Image, o => o.MapFrom(s => s.Author.Image));
+                .ForMember(d => d.Image, o => o.MapFrom(s => s.Author.Image.Url));
         }
     }
 }

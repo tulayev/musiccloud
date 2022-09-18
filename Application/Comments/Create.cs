@@ -1,5 +1,5 @@
 using Application.Core;
-using Application.DTOs;
+using Application.DTOs.Comments;
 using Application.Interfaces;
 using Application.Repository.IRepository;
 using AutoMapper;
@@ -35,19 +35,22 @@ namespace Application.Comments
 
             public async Task<Result<CommentDTO>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var track = await _unitOfWork.GetQueryable<Track>()
-                    .FirstOrDefaultAsync(t => t.Id == request.TrackId);
+                int count = await _unitOfWork.GetQueryable<Track>()
+                    .Where(t => t.Id == request.TrackId)
+                    .CountAsync();
 
-                if (track == null)
+                if (count == 0)
                     return null;
 
+                string username = _userAccessor.GetUsername();
+
                 var user = await _unitOfWork.GetQueryable<User>()
-                    .FirstOrDefaultAsync(u => u.UserName == _userAccessor.GetUsername());
+                    .FirstOrDefaultAsync(u => u.UserName == username);
 
                 var comment = new Comment
                 {
-                    Author = user,
-                    Track = track,
+                    AuthorId = user.Id,
+                    TrackId = request.TrackId,
                     Body = request.Body
                 };
 

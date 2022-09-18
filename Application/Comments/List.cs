@@ -1,5 +1,5 @@
 using Application.Core;
-using Application.DTOs;
+using Application.DTOs.Comments;
 using Application.Repository.IRepository;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -30,11 +30,11 @@ namespace Application.Comments
 
             public async Task<Result<List<CommentDTO>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var comments = _unitOfWork.GetQueryable<Comment>()
+                var comments = await _unitOfWork.GetQueryable<Comment>()
                     .Where(c => c.Track.Id == request.TrackId)
                     .OrderBy(c => c.CreatedAt)
                     .ProjectTo<CommentDTO>(_mapper.ConfigurationProvider)
-                    .ToList();
+                    .ToListAsync();
 
                 return Result<List<CommentDTO>>.Success(comments);
             }

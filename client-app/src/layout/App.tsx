@@ -1,5 +1,4 @@
 import './index.css'
-import Player from './Player'
 import Sidebar from './Sidebar'
 import Index from '../pages/Index'
 import TrackDetails from '../pages/tracks/TrackDetails'
@@ -58,7 +57,6 @@ const App = () => {
 						</div>
 					</div>
 				</div>
-				<Player />
 			</div>
 		</>
 	)

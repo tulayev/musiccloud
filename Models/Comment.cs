@@ -6,7 +6,11 @@ namespace Models
 
         public string Body { get; set; }
 
+        public string AuthorId { get; set; }
+
         public User Author { get; set; }
+
+        public Guid TrackId { get; set; }
 
         public Track Track { get; set; }
 

@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios'
 import { toast } from 'react-toastify'
 import AppFile from '../models/file'
 import PlayList from '../models/playlist'
+import PlayListTrack from '../models/playListTrack'
 import Track from '../models/track'
 import { User, UserFormValues } from '../models/user'
 import { store } from '../store/store'
@@ -82,7 +83,8 @@ const PlayLists = {
     details: (id: string) => requests.get<PlayList>(`/playlists/${id}`),
     create: (playList: PlayList) => requests.post<void>('/playlists', playList),
     update: (playList: PlayList) => requests.put<void>(`/playlists/${playList.id}`, playList),
-    delete: (id: string) => requests.del<void>(`/playlists/${id}`)
+    delete: (id: string) => requests.del<void>(`/playlists/${id}`),
+    addToPlayList: (playListTrack: PlayListTrack) => requests.post<void>('/addtoplaylist', playListTrack)
 }
 
 const Account = {

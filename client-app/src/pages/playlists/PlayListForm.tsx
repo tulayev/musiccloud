@@ -40,10 +40,16 @@ const PlayListForm = ({id}: Props) => {
                 id: uuidv4()
             }
             createPlayList(newPlayList)
-                .then(() => modalStore.closeModal())
+                .then(() => {
+                    modalStore.closeModal()
+                    window.location.reload()
+                })
         } else {
             updatePlayList(playList)
-                .then(() => modalStore.closeModal())
+                .then(() => {
+                    modalStore.closeModal()
+                    window.location.reload()
+                })
         }
     }
 

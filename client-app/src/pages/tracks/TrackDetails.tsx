@@ -49,7 +49,7 @@ const TrackDetails = () => {
                         <Button 
                             onClick={() => {
                                 deleteTrack(track.id)
-                                navigate('/')
+                                window.location.reload()
                             }}
                             color="red"
                         >

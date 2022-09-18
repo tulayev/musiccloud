@@ -7,13 +7,11 @@ import PlayListForm from './PlayListForm'
 const PlayListIndex = () => {
     const {playListStore} = useStore()
     const {modalStore} = useStore()
-    const {playLists, loadPlayLists} = playListStore
+    const {playLists, loadPlayLists, deletePlayList} = playListStore
 
     useEffect(() => {
         loadPlayLists()
     }, [loadPlayLists])
-
-    
 
     return (
         <>
@@ -36,7 +34,10 @@ const PlayListIndex = () => {
                                 </Button>
                                 <Button
                                     color="red"
-                                    onClick={() => console.log('delete') } 
+                                    onClick={() => {
+                                        deletePlayList(playList.id)
+                                        window.location.reload()
+                                    }} 
                                 >
                                     Удалить
                                 </Button>
