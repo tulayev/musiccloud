@@ -174,10 +174,10 @@ namespace Data.Migrations
                     b.Property<string>("Body")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("TrackId")
+                    b.Property<Guid>("TrackId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -266,27 +266,27 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b8d39ce1-57ba-4cc6-a4c5-df25abf84d9c"),
+                            Id = new Guid("cffd357d-fc02-4133-88e2-c5497044514d"),
                             Author = "Martin Garrix & Brooks",
                             Genre = "ElectroHouse",
                             Title = "Byte",
-                            UserId = "d7d95cd0-d3a6-4951-8c6e-0441a71ebc9a"
+                            UserId = "eb19a3e3-256b-478d-9036-1a292c9a7568"
                         },
                         new
                         {
-                            Id = new Guid("74dbcf8d-f7d2-4d8c-900d-cd4e20eb0489"),
+                            Id = new Guid("483ac019-7cea-431c-8fdb-c9f06546eb81"),
                             Author = "Post Malone, Ozzy Osbourne & Travi$ Scott",
                             Genre = "Hip-Hop",
                             Title = "Take What You Want",
-                            UserId = "d7d95cd0-d3a6-4951-8c6e-0441a71ebc9a"
+                            UserId = "eb19a3e3-256b-478d-9036-1a292c9a7568"
                         },
                         new
                         {
-                            Id = new Guid("8491c081-cbdd-4253-b492-0189b574b7ea"),
+                            Id = new Guid("379018e4-56e7-4e47-8ce9-d9ae216d1ac5"),
                             Author = "Pink Floyd",
                             Genre = "Rock",
                             Title = "Marooned",
-                            UserId = "d7d95cd0-d3a6-4951-8c6e-0441a71ebc9a"
+                            UserId = "eb19a3e3-256b-478d-9036-1a292c9a7568"
                         });
                 });
 
@@ -367,18 +367,18 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d7d95cd0-d3a6-4951-8c6e-0441a71ebc9a",
+                            Id = "eb19a3e3-256b-478d-9036-1a292c9a7568",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "df6baeed-6d19-4ee3-b20c-ba649c902da7",
+                            ConcurrencyStamp = "1c5de472-fddb-4dcc-8e39-4e61d99b0f72",
                             DisplayName = "Jon",
                             Email = "jon@test.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "JON@TEST.COM",
                             NormalizedUserName = "JON",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIskfR5ZQB6QsYsafuQDsyAA1UO0JGYqq97X6W5Y503+qHw1IVpCigelG7+Oa9TlPw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ1YkScfUoy3/1sr1E5VbRPmPgsR4gnpzU+csVs2V4wylx/DherrF7awZaRiA0GeCA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6F7697F2-D8E0-4B90-BA70-085EF99E4B96",
+                            SecurityStamp = "5E75C5E2-7F6E-4483-B7B8-518BB1F54651",
                             TwoFactorEnabled = false,
                             UserName = "jon"
                         });
@@ -444,7 +444,8 @@ namespace Data.Migrations
                     b.HasOne("Models.Track", "Track")
                         .WithMany("Comments")
                         .HasForeignKey("TrackId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Author");
 

@@ -1,13 +1,11 @@
 using Application.Core;
-using Application.Interfaces;
 using Application.Repository;
 using Application.Repository.IRepository;
+using Application.Services;
 using Application.Tracks;
 using Application.Validations;
 using Data;
 using FluentValidation;
-using Infrastructure.Files;
-using Infrastructure.Security;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

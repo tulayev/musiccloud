@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
 import Spinner from '../../layout/Spinner'
 import { observer } from 'mobx-react-lite'
@@ -8,7 +8,6 @@ import TrackDetailsChat from './TrackDetailsChat'
 
 const TrackDetails = () => {
     const {id} = useParams<{id: string}>()
-    const navigate = useNavigate()
     const {trackStore} = useStore()
     const {userStore} = useStore()
     const {loadTrackSingle, track, deleteTrack, loadingInitial} = trackStore
