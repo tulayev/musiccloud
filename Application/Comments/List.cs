@@ -32,7 +32,7 @@ namespace Application.Comments
             {
                 var comments = await _unitOfWork.GetQueryable<Comment>()
                     .Where(c => c.Track.Id == request.TrackId)
-                    .OrderBy(c => c.CreatedAt)
+                    .OrderBy(c => c.CreatedAtUtc)
                     .ProjectTo<CommentDTO>(_mapper.ConfigurationProvider)
                     .ToListAsync();
 

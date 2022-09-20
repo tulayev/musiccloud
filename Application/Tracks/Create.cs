@@ -1,7 +1,7 @@
 using Application.Core;
 using Application.DTOs.Tracks;
-using Application.Interfaces;
 using Application.Repository.IRepository;
+using Application.Services;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -33,12 +33,7 @@ namespace Application.Tracks
 
             public async Task<Result<bool>> Handle(Command request, CancellationToken cancellationToken)
             {
-                string username = _userAccessor.GetUsername();
-
-                var user = await _unitOfWork.GetQueryable<User>()
-                    .FirstOrDefaultAsync(u => u.UserName == username);
-
-                request.Track.UserId = user.Id;
+                request.Track.UserId = _userAccessor.User.Id; 
 
                 await _unitOfWork.AddAsync(_mapper.Map<Track>(request.Track));
                 await _unitOfWork.SaveChangesAsync();

@@ -12,6 +12,6 @@ namespace Application.DTOs.Comments
 
         public string Image { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAtUtc { get; set; }
     }
 }

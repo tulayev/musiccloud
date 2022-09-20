@@ -1,10 +1,9 @@
-using Application.Interfaces;
 using Application.Files;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.Extensions.Options;
 
-namespace Infrastructure.Files
+namespace Application.Services
 {
     public class FileAccessor : IFileAccessor
     {
@@ -25,8 +24,8 @@ namespace Infrastructure.Files
         {
             string ext = Path.GetExtension(filename).ToLower();
 
-            var uploadResult = ext == ".mp3" 
-                ? await UploadAudio(stream, filename) 
+            var uploadResult = ext == ".mp3"
+                ? await UploadAudio(stream, filename)
                 : await UploadImage(stream, filename);
 
             if (uploadResult.Error != null)
@@ -52,7 +51,7 @@ namespace Infrastructure.Files
                 File = new FileDescription(filename, stream)
             });
         }
-        
+
         private async Task<RawUploadResult> UploadImage(Stream stream, string filename)
         {
             return await _cloudinary.UploadAsync(new ImageUploadParams

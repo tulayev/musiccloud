@@ -1,7 +1,7 @@
 using Application.Core;
 using Application.DTOs.Comments;
-using Application.Interfaces;
 using Application.Repository.IRepository;
+using Application.Services;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -42,14 +42,9 @@ namespace Application.Comments
                 if (count == 0)
                     return null;
 
-                string username = _userAccessor.GetUsername();
-
-                var user = await _unitOfWork.GetQueryable<User>()
-                    .FirstOrDefaultAsync(u => u.UserName == username);
-
                 var comment = new Comment
                 {
-                    AuthorId = user.Id,
+                    AuthorId = _userAccessor.User.Id,
                     TrackId = request.TrackId,
                     Body = request.Body
                 };

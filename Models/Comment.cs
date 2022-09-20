@@ -14,6 +14,6 @@ namespace Models
 
         public Track Track { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
     }
 }

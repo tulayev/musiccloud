@@ -1,8 +1,7 @@
 using Application.Core;
-using Application.Interfaces;
 using Application.Repository.IRepository;
+using Application.Services;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Models;
 
 namespace Application.PlayLists
@@ -28,12 +27,7 @@ namespace Application.PlayLists
 
             public async Task<Result<bool>> Handle(Command request, CancellationToken cancellationToken)
             {
-                string username = _userAccessor.GetUsername();
-
-                var user = await _unitOfWork.GetQueryable<User>()
-                    .FirstOrDefaultAsync(u => u.UserName == username);
-
-                request.PlayList.UserId = user.Id;
+                request.PlayList.UserId = _userAccessor.User.Id;
 
                 await _unitOfWork.AddAsync(request.PlayList);
                 

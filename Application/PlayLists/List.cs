@@ -1,7 +1,7 @@
 using Application.Core;
 using Application.DTOs.PlayLists;
-using Application.Interfaces;
 using Application.Repository.IRepository;
+using Application.Services;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
@@ -31,14 +31,9 @@ namespace Application.PlayLists
 
             public async Task<Result<List<PlayListDTO>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                string username = _userAccessor.GetUsername();  
-
-                var user = await _unitOfWork.GetQueryable<User>()
-                    .FirstOrDefaultAsync(u => u.UserName == username);
-
                 var userPlayLists = await _unitOfWork.GetQueryable<PlayList>()
                         .ProjectTo<PlayListDTO>(_mapper.ConfigurationProvider)
-                        .Where(p => p.Owner.Username == user.UserName)
+                        .Where(p => p.Owner.Username == _userAccessor.User.UserName)
                         .ToListAsync();
 
                 return Result<List<PlayListDTO>>.Success(userPlayLists);

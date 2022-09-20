@@ -4,5 +4,5 @@ export default interface ChatComment {
     username: string
     displayName: string
     image: string
-    createdAt: Date
+    createdAtUtc: Date
 }

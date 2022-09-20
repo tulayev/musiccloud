@@ -1,6 +1,6 @@
 using Application.Files;
 
-namespace Application.Interfaces
+namespace Application.Services
 {
     public interface IFileAccessor
     {

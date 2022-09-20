@@ -52,7 +52,7 @@ export default observer(function TrackDetailsChat({trackId}: Props) {
 
                                 <Comment.Metadata style={{ color: '#ffffff' }}>
                                     <div>
-                                        { comment.createdAt.toString() }
+                                        { comment.createdAtUtc.toString() }
                                     </div>
                                 </Comment.Metadata>
                                 

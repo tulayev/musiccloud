@@ -37,8 +37,8 @@ namespace Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Body = table.Column<string>(type: "TEXT", nullable: true),
                     AuthorId = table.Column<string>(type: "TEXT", nullable: true),
-                    TrackId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    TrackId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,22 +59,22 @@ namespace Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Bio", "ConcurrencyStamp", "DisplayName", "Email", "EmailConfirmed", "ImageId", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "d7d95cd0-d3a6-4951-8c6e-0441a71ebc9a", 0, null, "df6baeed-6d19-4ee3-b20c-ba649c902da7", "Jon", "jon@test.com", false, null, false, null, "JON@TEST.COM", "JON", "AQAAAAEAACcQAAAAEIskfR5ZQB6QsYsafuQDsyAA1UO0JGYqq97X6W5Y503+qHw1IVpCigelG7+Oa9TlPw==", null, false, "6F7697F2-D8E0-4B90-BA70-085EF99E4B96", false, "jon" });
+                values: new object[] { "eb19a3e3-256b-478d-9036-1a292c9a7568", 0, null, "1c5de472-fddb-4dcc-8e39-4e61d99b0f72", "Jon", "jon@test.com", false, null, false, null, "JON@TEST.COM", "JON", "AQAAAAEAACcQAAAAEJ1YkScfUoy3/1sr1E5VbRPmPgsR4gnpzU+csVs2V4wylx/DherrF7awZaRiA0GeCA==", null, false, "5E75C5E2-7F6E-4483-B7B8-518BB1F54651", false, "jon" });
 
             migrationBuilder.InsertData(
                 table: "Tracks",
                 columns: new[] { "Id", "AudioId", "Author", "Genre", "PosterId", "Title", "UserId" },
-                values: new object[] { new Guid("74dbcf8d-f7d2-4d8c-900d-cd4e20eb0489"), null, "Post Malone, Ozzy Osbourne & Travi$ Scott", "Hip-Hop", null, "Take What You Want", "d7d95cd0-d3a6-4951-8c6e-0441a71ebc9a" });
+                values: new object[] { new Guid("379018e4-56e7-4e47-8ce9-d9ae216d1ac5"), null, "Pink Floyd", "Rock", null, "Marooned", "eb19a3e3-256b-478d-9036-1a292c9a7568" });
 
             migrationBuilder.InsertData(
                 table: "Tracks",
                 columns: new[] { "Id", "AudioId", "Author", "Genre", "PosterId", "Title", "UserId" },
-                values: new object[] { new Guid("8491c081-cbdd-4253-b492-0189b574b7ea"), null, "Pink Floyd", "Rock", null, "Marooned", "d7d95cd0-d3a6-4951-8c6e-0441a71ebc9a" });
+                values: new object[] { new Guid("483ac019-7cea-431c-8fdb-c9f06546eb81"), null, "Post Malone, Ozzy Osbourne & Travi$ Scott", "Hip-Hop", null, "Take What You Want", "eb19a3e3-256b-478d-9036-1a292c9a7568" });
 
             migrationBuilder.InsertData(
                 table: "Tracks",
                 columns: new[] { "Id", "AudioId", "Author", "Genre", "PosterId", "Title", "UserId" },
-                values: new object[] { new Guid("b8d39ce1-57ba-4cc6-a4c5-df25abf84d9c"), null, "Martin Garrix & Brooks", "ElectroHouse", null, "Byte", "d7d95cd0-d3a6-4951-8c6e-0441a71ebc9a" });
+                values: new object[] { new Guid("cffd357d-fc02-4133-88e2-c5497044514d"), null, "Martin Garrix & Brooks", "ElectroHouse", null, "Byte", "eb19a3e3-256b-478d-9036-1a292c9a7568" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_AuthorId",
@@ -95,22 +95,22 @@ namespace Data.Migrations
             migrationBuilder.DeleteData(
                 table: "Tracks",
                 keyColumn: "Id",
-                keyValue: new Guid("74dbcf8d-f7d2-4d8c-900d-cd4e20eb0489"));
+                keyValue: new Guid("379018e4-56e7-4e47-8ce9-d9ae216d1ac5"));
 
             migrationBuilder.DeleteData(
                 table: "Tracks",
                 keyColumn: "Id",
-                keyValue: new Guid("8491c081-cbdd-4253-b492-0189b574b7ea"));
+                keyValue: new Guid("483ac019-7cea-431c-8fdb-c9f06546eb81"));
 
             migrationBuilder.DeleteData(
                 table: "Tracks",
                 keyColumn: "Id",
-                keyValue: new Guid("b8d39ce1-57ba-4cc6-a4c5-df25abf84d9c"));
+                keyValue: new Guid("cffd357d-fc02-4133-88e2-c5497044514d"));
 
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "d7d95cd0-d3a6-4951-8c6e-0441a71ebc9a");
+                keyValue: "eb19a3e3-256b-478d-9036-1a292c9a7568");
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
