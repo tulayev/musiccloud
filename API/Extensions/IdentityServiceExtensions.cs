@@ -12,12 +12,7 @@ namespace API.Extensions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
         {
-            services.AddIdentityCore<User>(options => 
-            {
-                options.Password.RequireNonAlphanumeric = false;
-            })
-            .AddEntityFrameworkStores<DataContext>()
-            .AddSignInManager<SignInManager<User>>();
+            
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => 
@@ -35,7 +30,7 @@ namespace API.Extensions
                         {
                             var accessToken = context.Request.Query["access_token"];
                             var path = context.HttpContext.Request.Path;
-                            if (!String.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/chat"))
+                            if (!string.IsNullOrWhiteSpace(accessToken) && path.StartsWithSegments("/chat"))
                             {
                                 context.Token = accessToken;
                             }

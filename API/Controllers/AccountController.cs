@@ -1,11 +1,11 @@
 using System.Security.Claims;
-using API.DTOs;
 using API.Services;
 using Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Application.DTOs.Users;
 
 namespace API.Controllers
 {
@@ -15,12 +15,12 @@ namespace API.Controllers
     public class AccountController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
-        
         private readonly SignInManager<User> _signInManager;
-        
         private readonly TokenService _tokenService;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, TokenService tokenService)
+        public AccountController(UserManager<User> userManager, 
+            SignInManager<User> signInManager, 
+            TokenService tokenService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -28,7 +28,7 @@ namespace API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserDTO>> Login(LoginDTO loginDto)
+        public async Task<IActionResult> Login(LoginDto loginDto)
         {
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
 
@@ -87,13 +87,13 @@ namespace API.Controllers
 
         private UserDTO GetUserObject(User user)
         {
-                return new UserDTO
-                {
-                    DisplayName = user.DisplayName,
-                    Image = null,
-                    Token = _tokenService.CreateToken(user),
-                    Username = user.UserName
-                };
+            return new UserDTO
+            {
+                DisplayName = user.DisplayName,
+                Image = null,
+                Token = _tokenService.CreateToken(user),
+                Username = user.UserName
+            };
         }
     }
 }

@@ -1,50 +1,49 @@
-using Application.Repository.IRepository;
 using Data;
 
 namespace Application.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly DataContext _ctx;
+        private readonly DataContext _dataContext;
 
-        public UnitOfWork(DataContext ctx)
+        public UnitOfWork(DataContext dataContext)
         {
-            _ctx = ctx;
+            _dataContext = dataContext;
         }
 
         public IQueryable<TEntity> GetQueryable<TEntity>() where TEntity : class
         {
-            return _ctx.Set<TEntity>();
+            return _dataContext.Set<TEntity>();
         }
 
         public void Delete<TEntity>(TEntity entity) where TEntity : class
         {
-            _ctx.Set<TEntity>().Remove(entity);
+            _dataContext.Set<TEntity>().Remove(entity);
         }
 
         public void DeleteRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : class
         {
-            _ctx.Set<TEntity>().RemoveRange(entities);
+            _dataContext.Set<TEntity>().RemoveRange(entities);
         }
 
         public void DeleteRange<TEntity>(Func<TEntity, bool> where) where TEntity : class
         {
-            _ctx.Set<TEntity>().RemoveRange(_ctx.Set<TEntity>().Where(where));
+            _dataContext.Set<TEntity>().RemoveRange(_dataContext.Set<TEntity>().Where(where));
         }
 
         public async Task AddRangeAsync<TEntity>(IEnumerable<TEntity> rows) where TEntity : class
         {
-            await _ctx.Set<TEntity>().AddRangeAsync(rows);
+            await _dataContext.Set<TEntity>().AddRangeAsync(rows);
         }
 
         public async Task AddAsync<TEntity>(TEntity row) where TEntity : class
         {
-            await _ctx.Set<TEntity>().AddAsync(row);
+            await _dataContext.Set<TEntity>().AddAsync(row);
         }
 
         public async Task SaveChangesAsync()
         {
-            await _ctx.SaveChangesAsync();
+            await _dataContext.SaveChangesAsync();
         }
     }
 }
