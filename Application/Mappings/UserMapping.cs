@@ -10,6 +10,10 @@ namespace Application.Mappings
         {
             CreateMap<User, AccountDto>()
                 .ForMember(d => d.Image, o => o.MapFrom(s => s.Image.Url));
+
+            CreateMap<User, UserDto>()
+                .ForMember(dest => dest.Token, opt => opt.Ignore())
+                .ForMember(dest => dest.Image, opt => opt.Ignore());
         }
     }
 }

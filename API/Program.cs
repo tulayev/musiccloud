@@ -1,8 +1,11 @@
 using API.Extensions;
 using API.Middleware;
-using API.SignalR;
+using Application;
+using Application.Hubs;
+using Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +15,11 @@ builder.Services.AddControllers(options =>
     options.Filters.Add(new AuthorizeFilter(policy));
 });
 
-builder.Services.AddApplicationServices(builder.Configuration);
-builder.Services.AddIdentityServices(builder.Configuration);
+builder.Services
+    .AddInfrastructure(builder.Configuration)
+    .AddApplication()
+    .AddAppServices(builder.Configuration);
+
 
 var app = await builder.Build().MigrateDatabaseAsync();
 
@@ -24,10 +30,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-// app.UseHttpsRedirection();
-
-// app.UseFluentValidationExceptionHandler();
 
 app.UseRouting();
 

@@ -8,7 +8,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> Upload([FromForm] UploadFileCommand command)
         {
-            return HandleResult(await Mediator.Send(command));
+            return HandleResponse(await Mediator.Send(command));
         }
     }
 }

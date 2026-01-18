@@ -1,7 +1,7 @@
-﻿using Application.CQRS.Tracks.Queries;
+﻿using Application.Common.Interfaces.Repository;
+using Application.CQRS.Tracks.Queries;
 using Application.DTOs.Tracks;
 using Application.Helpers;
-using Application.Repository;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;

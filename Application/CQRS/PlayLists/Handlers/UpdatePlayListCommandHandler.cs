@@ -1,6 +1,6 @@
-﻿using Application.CQRS.PlayLists.Commands;
+﻿using Application.Common.Interfaces.Repository;
+using Application.CQRS.PlayLists.Commands;
 using Application.Helpers;
-using Application.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Models;

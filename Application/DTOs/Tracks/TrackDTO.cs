@@ -1,3 +1,4 @@
+using Application.DTOs.Users;
 using Models;
 
 namespace Application.DTOs.Tracks
@@ -10,7 +11,7 @@ namespace Application.DTOs.Tracks
         public string Genre { get; set; }
         public int? PosterId { get; set; }
         public int? AudioId { get; set; }
-        public AccountDTO Uploader { get; set; }
+        public AccountDto Uploader { get; set; }
         public AppFile Poster { get; set; }
         public AppFile Audio { get; set; }
     }

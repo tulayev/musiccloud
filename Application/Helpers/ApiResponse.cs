@@ -1,20 +1,27 @@
 namespace Application.Helpers
 {
-    public class ApiResponse<T>
+    public sealed class ApiResponse<T>
     {
-        public T? Value { get; set; }
-        public bool IsSuccess { get; set; }
-        public Exception? Error { get; set; }
-        
-        public ApiResponse(T? value, bool isSuccess, Exception? error)
+        public T Value { get; }
+        public bool IsSuccess { get; }
+        public Exception Error { get; }
+
+        private ApiResponse(T value)
         {
+            IsSuccess = true;
             Value = value;
-            IsSuccess = isSuccess;
-            Error = error;
+            Error = null!;
         }
 
-        public static ApiResponse<T> Success(T value) => new (value, true, null);
+        private ApiResponse(Exception error)
+        {
+            IsSuccess = false;
+            Error = error;
+            Value = default!;
+        }
 
-        public static ApiResponse<T> Failure(Exception error) => new (default, false, error);
+        public static ApiResponse<T> Success(T value) => new(value);
+
+        public static ApiResponse<T> Failure(Exception error) => new(error);
     }
 }

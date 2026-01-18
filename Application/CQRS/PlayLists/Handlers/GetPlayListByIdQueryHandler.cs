@@ -1,7 +1,7 @@
+using Application.Common.Interfaces.Repository;
 using Application.CQRS.PlayLists.Queries;
 using Application.DTOs.PlayLists;
 using Application.Helpers;
-using Application.Repository;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;

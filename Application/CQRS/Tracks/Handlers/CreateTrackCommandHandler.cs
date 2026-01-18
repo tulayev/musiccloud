@@ -1,7 +1,7 @@
-﻿using Application.CQRS.Tracks.Commands;
+﻿using Application.Common.Interfaces.Repository;
+using Application.Common.Interfaces.Users;
+using Application.CQRS.Tracks.Commands;
 using Application.Helpers;
-using Application.Repository;
-using Application.Services.Users;
 using AutoMapper;
 using MediatR;
 using Models;

@@ -11,38 +11,38 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return HandleResult(await Mediator.Send(new GetPlayListsQuery()));
+            return HandleResponse(await Mediator.Send(new GetPlayListsQuery()));
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            return HandleResult(await Mediator.Send(new GetPlayListByIdQuery(id)));
+            return HandleResponse(await Mediator.Send(new GetPlayListByIdQuery(id)));
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(PlayList playList)
         {
-            return HandleResult(await Mediator.Send(new CreatePlayListCommand(playList)));
+            return HandleResponse(await Mediator.Send(new CreatePlayListCommand(playList)));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Edit(Guid id, PlayList playList)
         {
             playList.Id = id;
-            return HandleResult(await Mediator.Send(new UpdatePlayListCommand(playList)));
+            return HandleResponse(await Mediator.Send(new UpdatePlayListCommand(playList)));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            return HandleResult(await Mediator.Send(new DeletePlayListCommand(id)));
+            return HandleResponse(await Mediator.Send(new DeletePlayListCommand(id)));
         }
 
         [HttpPost("addtoplaylist")]
         public async Task<IActionResult> AddToPlayList(AddTrackToPlayListDto addTrackToPlayListDto)
         {
-            return HandleResult(await Mediator.Send(new AddTrackToPlayListCommand(addTrackToPlayListDto)));
+            return HandleResponse(await Mediator.Send(new AddTrackToPlayListCommand(addTrackToPlayListDto)));
         }
     }
 }

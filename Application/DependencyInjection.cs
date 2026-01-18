@@ -1,7 +1,8 @@
-﻿using Data;
+﻿using Application.Common.Behaviors;
+using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Models;
-using Microsoft.AspNetCore.Identity;
+using System.Reflection;
 
 namespace Application
 {
@@ -9,12 +10,13 @@ namespace Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddIdentityCore<User>(options =>
-            {
-                options.Password.RequireNonAlphanumeric = false;
-            })
-            .AddEntityFrameworkStores<DataContext>()
-            .AddSignInManager<SignInManager<User>>();
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddSignalR();
+
+            return services;
         }
     }
 }

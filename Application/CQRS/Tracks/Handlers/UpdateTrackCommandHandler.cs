@@ -1,6 +1,6 @@
-﻿using Application.CQRS.Tracks.Commands;
+﻿using Application.Common.Interfaces.Repository;
+using Application.CQRS.Tracks.Commands;
 using Application.Helpers;
-using Application.Repository;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

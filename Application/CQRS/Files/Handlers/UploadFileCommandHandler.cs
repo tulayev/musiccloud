@@ -1,7 +1,7 @@
+using Application.Common.Interfaces.Files;
+using Application.Common.Interfaces.Repository;
 using Application.CQRS.Files.Commands;
 using Application.Helpers;
-using Application.Repository;
-using Application.Services.Files;
 using MediatR;
 using Models;
 

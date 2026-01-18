@@ -1,7 +1,7 @@
-﻿using Application.CQRS.Tracks.Commands;
+﻿using Application.Common.Interfaces.Files;
+using Application.Common.Interfaces.Repository;
+using Application.CQRS.Tracks.Commands;
 using Application.Helpers;
-using Application.Repository;
-using Application.Services.Files;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Models;

@@ -1,8 +1,6 @@
 using Application.CQRS.Tracks.Commands;
 using Application.Helpers;
-using Data;
 using FluentValidation;
-using MediatR;
 
 namespace Application.Validators.Tracks
 {

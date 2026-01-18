@@ -1,9 +1,10 @@
 ﻿using Application.DTOs.PlayLists;
+using AutoMapper;
 using Models;
 
 namespace Application.Mappings
 {
-    public class PlayListMapping : MappingProfiles
+    public class PlayListMapping : Profile
     {
         public PlayListMapping()
         {
