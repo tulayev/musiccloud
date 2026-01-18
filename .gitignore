@@ -214,14 +214,6 @@ project.lock.json
 **/node_modules/*
 #**/wwwroot/*
 
-# Development settings
-**/appsettings.json
-
-# SQLite db stuff
-**/*.db
-**/*.db-shm
-**/*.db-wal
-
 # SpecFlow specific
 *.feature.cs
 *.feature.xlsx.*

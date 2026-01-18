@@ -1,5 +1,6 @@
+using Application.CQRS.PlayLists.Commands;
+using Application.CQRS.PlayLists.Queries;
 using Application.DTOs.PlayLists;
-using Application.PlayLists;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 
@@ -10,38 +11,38 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return HandleResult(await Mediator.Send(new List.Query()));
+            return HandleResponse(await Mediator.Send(new GetPlayListsQuery()));
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            return HandleResult(await Mediator.Send(new Details.Query { Id = id }));
+            return HandleResponse(await Mediator.Send(new GetPlayListByIdQuery(id)));
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(PlayList playList)
         {
-            return HandleResult(await Mediator.Send(new Create.Command { PlayList = playList }));
+            return HandleResponse(await Mediator.Send(new CreatePlayListCommand(playList)));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Edit(Guid id, PlayList playList)
         {
             playList.Id = id;
-            return HandleResult(await Mediator.Send(new Edit.Command { PlayList = playList }));
+            return HandleResponse(await Mediator.Send(new UpdatePlayListCommand(playList)));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
+            return HandleResponse(await Mediator.Send(new DeletePlayListCommand(id)));
         }
 
         [HttpPost("addtoplaylist")]
-        public async Task<IActionResult> AddToPlayList(AddTrackToPlayListDTO addTrackToPlayListDTO)
+        public async Task<IActionResult> AddToPlayList(AddTrackToPlayListDto addTrackToPlayListDto)
         {
-            return HandleResult(await Mediator.Send(new AddTrack.Command { AddTrackToPlayListDTO = addTrackToPlayListDTO }));
+            return HandleResponse(await Mediator.Send(new AddTrackToPlayListCommand(addTrackToPlayListDto)));
         }
     }
 }

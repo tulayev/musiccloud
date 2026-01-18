@@ -1,8 +1,8 @@
+using Application.CQRS.Tracks.Commands;
+using Application.CQRS.Tracks.Queries;
 using Application.DTOs.Tracks;
-using Application.Tracks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Models;
 
 namespace API.Controllers
 {
@@ -12,33 +12,33 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return HandleResult(await Mediator.Send(new List.Query()));
+            return HandleResponse(await Mediator.Send(new GetTracksQuery()));
         }
 
         [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            return HandleResult(await Mediator.Send(new Details.Query { Id = id }));
+            return HandleResponse(await Mediator.Send(new GetTrackByIdQuery(id)));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateTrackDTO track)
+        public async Task<IActionResult> Create(CreateTrackDto createTrackDto)
         {
-            return HandleResult(await Mediator.Send(new Create.Command { Track = track }));
+            return HandleResponse(await Mediator.Send(new CreateTrackCommand(createTrackDto)));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Edit(Guid id, EditTrackDTO track)
+        public async Task<IActionResult> Edit(Guid id, UpdateTrackDto updateTrackDto)
         {
-            track.Id = id;
-            return HandleResult(await Mediator.Send(new Edit.Command { Track = track }));
+            updateTrackDto.Id = id;
+            return HandleResponse(await Mediator.Send(new UpdateTrackCommand(updateTrackDto)));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
+            return HandleResponse(await Mediator.Send(new DeleteTrackCommand(id)));
         }
     }
 }

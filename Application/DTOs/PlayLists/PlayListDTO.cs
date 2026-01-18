@@ -1,11 +1,11 @@
+using Application.DTOs.Users;
+
 namespace Application.DTOs.PlayLists
 {
-    public class PlayListDTO
+    public class PlayListDto
     {
         public Guid Id { get; set; }
-
         public string Name { get; set; }
-
-        public AccountDTO Owner { get; set; }
+        public AccountDto Owner { get; set; }
     }
 }

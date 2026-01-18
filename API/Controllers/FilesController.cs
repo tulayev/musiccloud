@@ -1,4 +1,4 @@
-using Application.Files;
+using Application.CQRS.Files.Commands;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -6,9 +6,9 @@ namespace API.Controllers
     public class FilesController : BaseApiController
     {
         [HttpPost]
-        public async Task<IActionResult> Upload([FromForm] Add.Command command)
+        public async Task<IActionResult> Upload([FromForm] UploadFileCommand command)
         {
-            return HandleResult(await Mediator.Send(command));
+            return HandleResponse(await Mediator.Send(command));
         }
     }
 }
