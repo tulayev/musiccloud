@@ -7,9 +7,9 @@ namespace Infrastructure.Services.Files
 {
     public class CloudinarySettings
     {
-        public string CloudName { get; set; }
-        public string ApiKey { get; set; }
-        public string ApiSecret { get; set; }
+        public string CloudName { get; set; } = null!;
+        public string ApiKey { get; set; } = null!;
+        public string ApiSecret { get; set; } = null!;
     }
 
     public class FileAccessorService : IFileAccessorService
@@ -43,7 +43,7 @@ namespace Infrastructure.Services.Files
             return new FileUploadResult(uploadResult.PublicId, uploadResult.SecureUrl.ToString());
         }
 
-        public async Task<string> DeleteFile(string publicId)
+        public async Task<string?> DeleteFile(string publicId)
         {
             var result = await _cloudinary.DestroyAsync(new DeletionParams(publicId));
 

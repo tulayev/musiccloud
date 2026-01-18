@@ -10,7 +10,7 @@ namespace Infrastructure.Services.Users
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly DataContext _dataContext;
-        private User _user;
+        private User? _user;
 
         public UserAccessorService(IHttpContextAccessor httpContextAccessor, 
             DataContext dataContext)
@@ -19,13 +19,25 @@ namespace Infrastructure.Services.Users
             _dataContext = dataContext;
         }
 
-        public User User => _user ??= GetUser();
+        public User? User => _user ??= GetUser();
 
-        private User GetUser()
+        private User? GetUser()
         {
-            var username = _httpContextAccessor.HttpContext!.User.FindFirstValue(ClaimTypes.Name);
+            var httpContext = _httpContextAccessor.HttpContext;
             
-            return _dataContext.Users.FirstOrDefault(u => u.UserName == username);
+            if (httpContext == null)
+            {
+                return null;
+            }
+
+            var username = httpContext.User.FindFirstValue(ClaimTypes.Name);
+
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                return null;
+            }
+            
+            return _dataContext.Users.FirstOrDefault(x => x.UserName == username);
         }
     }
 }

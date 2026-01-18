@@ -6,13 +6,13 @@ namespace Infrastructure.Data
 {
     public class DataContext : IdentityDbContext<User>
     {
-        public DbSet<AppFile> Files { get; set; }
-        public DbSet<Track> Tracks { get; set; }
-        public DbSet<PlayList> PlayLists { get; set; }
-        public DbSet<PlayListTrack> PlayListTrack { get; set; }
-        public DbSet<Comment> Comments { get; set; }
+        public DbSet<AppFile> Files { get; set; } = null!;
+        public DbSet<Track> Tracks { get; set; } = null!;
+        public DbSet<PlayList> PlayLists { get; set; } = null!;
+        public DbSet<PlayListTrack> PlayListTrack { get; set; } = null!;
+        public DbSet<Comment> Comments { get; set; } = null!;
 
-        public DataContext(DbContextOptions options) : base(options)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
 
