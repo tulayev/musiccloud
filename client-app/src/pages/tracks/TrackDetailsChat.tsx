@@ -41,7 +41,7 @@ export default observer(function TrackDetailsChat({trackId}: Props) {
                 <Comment.Group>
                     {commentStore.comments.map(comment => (
                         <Comment key={comment.id}>
-                            <Comment.Avatar src={ comment.image || '/assets/images/icons/avatar.png' } />
+                            <Comment.Avatar src={ comment.image || '/assets/images/avatar.png' } />
                             <Comment.Content>
                                 <Comment.Author 
                                     style={{ color: '#ffffff' }} 

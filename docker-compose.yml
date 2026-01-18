@@ -1,0 +1,40 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:17
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=MusicCloudDb
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  music-cloud-api:
+    container_name: music-cloud-api
+    image: umarbek/music-cloud-api:latest
+    build: 
+      context: .
+      dockerfile: src/API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=Server=postgres;Port=5432;Database=MusicCloudDb;User Id=postgres;Password=postgres;Include Error Detail=true
+      # - ClientUrl=http://music-cloud-client TODO: add Docker support for the client app.
+      - Cloudinary__CloudName=
+      - Cloudinary__ApiKey=
+      - Cloudinary__ApiSecret=
+    ports:
+      - "5000:80"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  pgdata:

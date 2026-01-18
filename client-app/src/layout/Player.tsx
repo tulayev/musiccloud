@@ -153,7 +153,7 @@ export default function Player() {
                                 title="Previous button"
                             >
                                 <img 
-                                    src="/assets/images/icons/previous.png" 
+                                    src="/assets/images/previous.png" 
                                     alt="Previous" 
                                 />
                             </button>
@@ -166,7 +166,7 @@ export default function Player() {
                                 title="Play button"
                             >
                                 <img 
-                                    src="/assets/images/icons/play.png" 
+                                    src="/assets/images/play.png" 
                                     alt="Play" 
                                 />
                             </button>
@@ -179,7 +179,7 @@ export default function Player() {
                                 title="Pause button" 
                             >
                                 <img 
-                                    src="/assets/images/icons/pause.png" 
+                                    src="/assets/images/pause.png" 
                                     alt="Pause" 
                                 />
                             </button>
@@ -191,7 +191,7 @@ export default function Player() {
                                 title="Next button"
                             >
                                 <img 
-                                    src="/assets/images/icons/next.png" 
+                                    src="/assets/images/next.png" 
                                     alt="Next" 
                                 />
                             </button>
@@ -228,7 +228,7 @@ export default function Player() {
                             // onClick={() => mute()}
                         >
                             <img 
-                                src="/assets/images/icons/volume.png" 
+                                src="/assets/images/volume.png" 
                                 alt="Volume" 
                             />
                         </button>

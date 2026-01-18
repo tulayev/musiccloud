@@ -12,7 +12,7 @@ export default observer(function Sidebar() {
             <nav className="navbar">
                 <Link to="/" className="logo">
                     <img 
-                        src="/assets/images/icons/logo.png" 
+                        src="/assets/images/logo.png" 
                         alt="Logo" 
                     />
                 </Link>
@@ -22,7 +22,7 @@ export default observer(function Sidebar() {
                         <a href="#" className="nav-item-link">
                             Поиск
                             <img 
-                                src="/assets/images/icons/search.png" 
+                                src="/assets/images/search.png" 
                                 className="icon" 
                                 alt="Search button" 
                             />
