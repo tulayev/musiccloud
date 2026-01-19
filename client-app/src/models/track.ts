@@ -1,4 +1,4 @@
-import AppFile from './file'
+import { AppFile } from './file'
 
 interface Uploader {
     username: string
@@ -7,7 +7,7 @@ interface Uploader {
     image?: string
 }
 
-export default interface Track {
+export interface Track {
     id: string
     title: string
     author: string

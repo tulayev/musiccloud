@@ -1,35 +1,36 @@
-import './index.css'
-import Sidebar from './Sidebar'
-import Index from '../pages/Index'
-import TrackDetails from '../pages/tracks/TrackDetails'
-import TrackForm from '../pages/tracks/TrackForm'
-import { Routes, Route, useLocation, Navigate } from 'react-router-dom'
-import { observer } from 'mobx-react-lite'
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.min.css'
-import NotFound from '../pages/errors/NotFound'
-import ServerError from '../pages/errors/ServerError'
-import LoginForm from '../pages/auth/LoginForm'
-import { useStore } from '../store/store'
-import { useEffect } from 'react'
-import Spinner from './Spinner'
-import ModalContainer from '../components/modals/ModalContainer'
-import YourMusic from '../pages/YourMusic'
+import './index.css';
+import Sidebar from './Sidebar';
+import Index from '../pages/Index';
+import TrackDetails from '../pages/tracks/TrackDetails';
+import TrackForm from '../pages/tracks/TrackForm';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+import NotFound from '../pages/errors/NotFound';
+import ServerError from '../pages/errors/ServerError';
+import LoginForm from '../pages/auth/LoginForm';
+import { useStore } from '../store/store';
+import { useEffect } from 'react';
+import Spinner from './Spinner';
+import ModalContainer from '../components/modals/ModalContainer';
+import YourMusic from '../pages/YourMusic';
 
 const App = () => {
-	const location = useLocation()
-	const {commonStore, userStore} = useStore()
+	const location = useLocation();
+	const {commonStore, userStore} = useStore();
 
 	useEffect(() => {
 		if (commonStore.token) {
-			userStore.getUser().finally(() => commonStore.setAppLoaded())
+			userStore.getUser().finally(() => commonStore.setAppLoaded());
 		} else {
-			commonStore.setAppLoaded()
+			commonStore.setAppLoaded();
 		}
-	}, [commonStore, userStore])
+	}, [commonStore, userStore]);
 
-	if (!commonStore.appLoaded)
+	if (!commonStore.appLoaded) {
 		return <Spinner />
+  }
 
 	return (
 		<>

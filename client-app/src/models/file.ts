@@ -1,4 +1,4 @@
-export default interface AppFile {
+export interface AppFile {
     id: number
     publicId: string
     url: string

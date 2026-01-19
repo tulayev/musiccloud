@@ -1,4 +1,4 @@
-export default interface PlayListTrack {
+export interface PlayListTrack {
     playListId: string,
     trackId: string
 }

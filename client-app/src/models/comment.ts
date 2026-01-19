@@ -1,4 +1,4 @@
-export default interface ChatComment {
+export interface ChatComment {
     id: number
     body: string
     username: string
