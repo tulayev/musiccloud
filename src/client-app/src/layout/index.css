@@ -239,15 +239,17 @@ img {
 
 .grid-view-container {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 435px));
+    gap: 20px;
 }
 
 .grid-view-item {
-    margin: 20px;
+    margin: 0;
 }
 
 .grid-view-item .image_cover {
-    width: 435px;
+    width: 100%;
+    max-width: 435px;
     height: 370px;
 }
 

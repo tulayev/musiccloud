@@ -7,17 +7,18 @@ using Application.CQRS.Users.Commands;
 
 namespace API.Controllers
 {
-    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class AccountController : BaseApiController
     {
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto loginDto)
         {
             return HandleResponse(await Mediator.Send(new LoginUserQuery(loginDto)));
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto registerDto)
         {

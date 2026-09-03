@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const tempTrackList = [
   {
@@ -23,9 +23,10 @@ const tempTrackList = [
 
 export default function Player() {
   const [trackIndex, setTrackIndex] = useState(0);
-  const [audio] = useState(new Audio(tempTrackList[trackIndex].path));
+  const [audio] = useState(() => new Audio());
   const [playing, setPlaying] = useState(false) ;
   const [volume, setVolume] = useState(100);
+  const [muted, setMuted] = useState(false);
   const [trackProgress, setTrackProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState('00:00');
   const [duration, setDuration] = useState('00:00');
@@ -37,20 +38,19 @@ export default function Player() {
   }
 
   const loadTrack = () => {
-    let updateTimer;
-    clearInterval(updateTimer);
     reset();
 
     audio.src = tempTrackList[trackIndex].path;
     audio.load();
-    
-    updateTimer = setInterval(remoteUpdate, 1000);
-    audio.addEventListener('ended', next);
   }
 
   const play = () => {
     setPlaying(true);
-    audio.play();
+    audio.play().catch((err: DOMException) => {
+      if (err.name !== 'AbortError') {
+        console.error(err);
+      }
+    });
   }
 
   const pause = () => {
@@ -116,6 +116,28 @@ export default function Player() {
     setVolume(value);
     audio.volume = value / 100;
   }
+
+  const mute = () => {
+    const nextMuted = !muted;
+    setMuted(nextMuted);
+    audio.muted = nextMuted;
+  }
+
+  const nextRef = useRef(next);
+  useEffect(() => {
+    nextRef.current = next;
+  });
+
+  useEffect(() => {
+    const handleEnded = () => nextRef.current();
+    audio.addEventListener('ended', handleEnded);
+    return () => audio.removeEventListener('ended', handleEnded);
+  }, [audio]);
+
+  useEffect(() => {
+    const id = setInterval(remoteUpdate, 1000);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     if (trackIndex >= 0) {
@@ -225,11 +247,11 @@ export default function Player() {
 
         <div className="player_right_content">
           <div className="volume-bar">
-            <button 
-              id="muteBtn" 
-              className="control-button volume" 
-              title="Volume button"
-              // onClick={() => mute()}
+            <button
+              onClick={() => mute()}
+              id="muteBtn"
+              className="control-button volume"
+              title={muted ? 'Unmute' : 'Mute'}
             >
               <img 
                 src="/assets/images/volume.png" 
